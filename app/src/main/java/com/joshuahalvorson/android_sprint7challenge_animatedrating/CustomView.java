@@ -46,6 +46,33 @@ public class CustomView extends LinearLayout {
         setAnimatedDrawable(startingRating - 1);
     }
 
+    public int getMaxRating() {
+        return maxRating;
+    }
+
+    public void setMaxRating(int maxRating) {
+        this.maxRating = maxRating;
+        drawImage(maxRating);
+    }
+
+    private void drawImage(int images){
+        removeAllViews();
+        imageViews.clear();
+        for(int i = 1; i <= images; i++){
+            final CustomImageView imageView = new CustomImageView(getContext());
+            imageViews.add(imageView);
+            imageView.setImageDrawable(getResources().getDrawable(emptyImage));
+            imageView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    setAnimatedDrawable(imageViews.indexOf(imageView));
+                }
+            });
+            addView(imageView);
+        }
+        setAnimatedDrawable(startingRating - 1);
+    }
+
     private void setAnimatedDrawable(int index){
         if(imageViews.get(index).isFilled()){
             for(int i = index + 1; i <= imageViews.size() - 1; i++){
@@ -83,18 +110,7 @@ public class CustomView extends LinearLayout {
         maxRating = typedArray.getInt(R.styleable.CustomView_maxRating, 5);
         startingRating = typedArray.getInt(R.styleable.CustomView_startingRating, 3);
 
-        for(int i = 1; i <= maxRating; i++){
-            final CustomImageView imageView = new CustomImageView(getContext());
-            imageViews.add(imageView);
-            imageView.setImageDrawable(getResources().getDrawable(emptyImage));
-            imageView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    setAnimatedDrawable(imageViews.indexOf(imageView));
-                }
-            });
-            addView(imageView);
-        }
+        drawImage(maxRating);
 
         setAnimatedDrawable(startingRating - 1);
     }
