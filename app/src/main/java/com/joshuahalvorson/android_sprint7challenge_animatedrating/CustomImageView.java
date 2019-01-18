@@ -22,6 +22,14 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         init(attrs);
     }
 
+    public boolean isFilled() {
+        return isFilled;
+    }
+
+    public void setFilled(boolean filled) {
+        isFilled = filled;
+    }
+
     public void init(AttributeSet attrs){
 
     }
