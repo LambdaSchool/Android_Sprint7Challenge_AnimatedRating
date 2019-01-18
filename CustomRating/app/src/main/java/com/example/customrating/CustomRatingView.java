@@ -1,6 +1,7 @@
 package com.example.customrating;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.RatingBar;
 
@@ -19,5 +20,15 @@ public class CustomRatingView extends RatingBar {
 
     public CustomRatingView(Context context) {
         super(context);
+    }
+
+    protected void init(AttributeSet attrs){
+
+
+    }
+
+    @Override
+    protected synchronized void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 }
