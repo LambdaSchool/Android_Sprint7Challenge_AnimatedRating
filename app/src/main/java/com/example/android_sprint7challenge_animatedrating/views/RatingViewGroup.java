@@ -1,12 +1,12 @@
 package com.example.android_sprint7challenge_animatedrating.views;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.example.android_sprint7challenge_animatedrating.*;
 
@@ -35,6 +35,11 @@ public class RatingViewGroup extends FrameLayout {
     public void init(AttributeSet attrs) {
         final View inflatedView = inflate(getContext(), R.layout.rating_view_group_layout, null);
         addView(inflatedView);
-        ((RatingView) findViewById(R.id.rating_view)).setBackground(getResources().getDrawable(R.drawable.ic_launcher_background));
+//        ((RatingView) findViewById(R.id.rating_view)).setBackground(getResources().getDrawable(R.drawable.ic_launcher_background));
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 }
