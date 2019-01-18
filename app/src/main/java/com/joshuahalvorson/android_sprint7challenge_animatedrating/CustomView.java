@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomView extends LinearLayout {
+
+    private int emptyImage, filledImage, maxRating, startingRating;
+    private List<CustomImageView> imageViews;
+
+
     public CustomView(Context context) {
         super(context);
         init(null);
@@ -34,9 +39,9 @@ public class CustomView extends LinearLayout {
         init(attrs);
     }
 
-    private void setAnimatedDrawable(List<CustomImageView> imageViews, CustomImageView imageView, int filledImage, int emptyImage){
-        if(imageView.isFilled()){
-            for(int i = imageViews.indexOf(imageView) + 1; i <= imageViews.size() - 1; i++){
+    private void setAnimatedDrawable(int index){
+        if(imageViews.get(index).isFilled()){
+            for(int i = index + 1; i <= imageViews.size() - 1; i++){
                 if(imageViews.get(i).isFilled()){
                     imageViews.get(i).setImageDrawable(getResources().getDrawable(emptyImage));
                     Drawable drawable = imageViews.get(i).getDrawable();
@@ -47,7 +52,7 @@ public class CustomView extends LinearLayout {
                 }
             }
         }else{
-            for(int i = imageViews.indexOf(imageView); i >= 0; i--){
+            for(int i = index; i >= 0; i--){
                 if(!imageViews.get(i).isFilled()){
                     imageViews.get(i).setImageDrawable(getResources().getDrawable(filledImage));
                     Drawable drawable = imageViews.get(i).getDrawable();
@@ -63,14 +68,13 @@ public class CustomView extends LinearLayout {
 
     protected void init(AttributeSet attrs){
         setOrientation(HORIZONTAL);
-        final List<CustomImageView> imageViews = new ArrayList<>();
+        imageViews = new ArrayList<>();
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CustomView);
-
-        final int emptyImage =  typedArray.getResourceId(R.styleable.CustomView_emptyImage, R.drawable.ic_launcher_background);
-        final int filledImage =  typedArray.getResourceId(R.styleable.CustomView_filledImage, R.drawable.ic_launcher_foreground);
-        int maxRating = typedArray.getInt(R.styleable.CustomView_maxRating, 5);
-        int startingRating = typedArray.getInt(R.styleable.CustomView_startingRating, 3);
+        emptyImage =  typedArray.getResourceId(R.styleable.CustomView_emptyImage, R.drawable.ic_launcher_background);
+        filledImage =  typedArray.getResourceId(R.styleable.CustomView_filledImage, R.drawable.ic_launcher_foreground);
+        maxRating = typedArray.getInt(R.styleable.CustomView_maxRating, 5);
+        startingRating = typedArray.getInt(R.styleable.CustomView_startingRating, 3);
 
         for(int i = 1; i <= maxRating; i++){
             final CustomImageView imageView = new CustomImageView(getContext());
@@ -79,13 +83,12 @@ public class CustomView extends LinearLayout {
             imageView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    setAnimatedDrawable(imageViews, imageView, filledImage, emptyImage);
-                    Log.i("SAdas", Integer.toString(imageViews.indexOf(imageView)));
+                    setAnimatedDrawable(imageViews.indexOf(imageView));
                 }
             });
             addView(imageView);
         }
 
-        setAnimatedDrawable(imageViews, imageViews.get(startingRating - 1), filledImage, emptyImage);
+        setAnimatedDrawable(startingRating - 1);
     }
 }

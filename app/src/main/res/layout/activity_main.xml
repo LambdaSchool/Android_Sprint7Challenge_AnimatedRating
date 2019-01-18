@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <com.joshuahalvorson.android_sprint7challenge_animatedrating.CustomView
+        android:id="@+id/custom_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:maxRating="5"
