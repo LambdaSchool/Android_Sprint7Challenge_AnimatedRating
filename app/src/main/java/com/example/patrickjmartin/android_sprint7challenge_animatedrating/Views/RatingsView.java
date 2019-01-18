@@ -31,6 +31,7 @@ public class RatingsView extends android.support.v7.widget.AppCompatImageView {
     public RatingsView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
+
     }
 
     public boolean isFull(){
@@ -39,6 +40,11 @@ public class RatingsView extends android.support.v7.widget.AppCompatImageView {
 
     public void setFull(boolean full) {
         isFull = full;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 
     protected void init(AttributeSet attrs) {

@@ -6,16 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.patrickjmartin.android_sprint7challenge_animatedrating.Views.RatingsView
-        android:layout_width="100dp"
-        android:layout_height="90dp"
+    <com.example.patrickjmartin.android_sprint7challenge_animatedrating.Views.CustomRatingViewHolder
+        android:id="@+id/star_custom_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        app:empty_star="@drawable/avd_dark_to_light"
+        app:full_star="@drawable/avd_light_to_dark"
+        app:initial_stars="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:max_stars="10" />
 
-    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
