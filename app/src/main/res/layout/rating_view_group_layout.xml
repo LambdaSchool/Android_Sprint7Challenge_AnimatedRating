@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <com.example.android_sprint7challenge_animatedrating.views.RatingView
+        android:id="@+id/rating_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        app:empty_symbol="@android:drawable/star_off"
+        app:filled_symbol="@android:drawable/star_on"
+        app:max_rating="10"
+        app:starting_rating="2"/>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/image_view"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:src="@color/colorPrimaryDark"-->
+        <!--/>-->
+
 
 </LinearLayout>
