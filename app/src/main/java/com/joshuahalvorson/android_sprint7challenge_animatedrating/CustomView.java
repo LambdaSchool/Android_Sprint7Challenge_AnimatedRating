@@ -6,10 +6,8 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +35,15 @@ public class CustomView extends LinearLayout {
     public CustomView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
+    }
+
+    public int getStartingRating() {
+        return startingRating;
+    }
+
+    public void setStartingRating(int startingRating) {
+        this.startingRating = startingRating;
+        setAnimatedDrawable(startingRating - 1);
     }
 
     private void setAnimatedDrawable(int index){
