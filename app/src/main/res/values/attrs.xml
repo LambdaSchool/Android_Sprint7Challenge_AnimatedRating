@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RatingsView">
+        <attr name="back_star_color" format="color"/>
+        <attr name="back_star_vertical" format="integer"/>
+        <attr name="back_star_horizontal" format="integer"/>
+        <attr name="front_star_color" format="color"/>
+        <attr name="front_star_vertical" format="integer"/>
+        <attr name="front_star_horizontal" format="integer"/>
+    </declare-styleable>
+</resources>
