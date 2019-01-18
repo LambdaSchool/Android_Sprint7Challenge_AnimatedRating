@@ -84,7 +84,6 @@ public class RatingView extends View {
                 layoutWidth = getWidth();
                 xIncrement = layoutWidth / maxRating;
                 currentRating = (int) (event.getX()/xIncrement);
-
                 invalidate();
 
                 break;
@@ -92,7 +91,14 @@ public class RatingView extends View {
                 break;
         }
         return true;
+    }
 
+    public int getCurrentRating() {
+        return currentRating;
+    }
 
+    public void setCurrentRating(int currentRating) {
+        this.currentRating = currentRating;
+        invalidate();
     }
 }
