@@ -2,6 +2,7 @@ package com.joshuahalvorson.android_sprint7challenge_animatedrating;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -36,13 +37,25 @@ public class CustomView extends LinearLayout {
     private void setAnimatedDrawable(List<CustomImageView> imageViews, CustomImageView imageView, int filledImage, int emptyImage){
         if(imageView.isFilled()){
             for(int i = imageViews.indexOf(imageView) + 1; i <= imageViews.size() - 1; i++){
-                imageViews.get(i).setImageDrawable(getResources().getDrawable(emptyImage));
-                imageViews.get(i).setFilled(false);
+                if(imageViews.get(i).isFilled()){
+                    imageViews.get(i).setImageDrawable(getResources().getDrawable(emptyImage));
+                    Drawable drawable = imageViews.get(i).getDrawable();
+                    if(drawable instanceof Animatable){
+                        ((Animatable) drawable).start();
+                    }
+                    imageViews.get(i).setFilled(false);
+                }
             }
         }else{
             for(int i = imageViews.indexOf(imageView); i >= 0; i--){
-                imageViews.get(i).setImageDrawable(getResources().getDrawable(filledImage));
-                imageViews.get(i).setFilled(true);
+                if(!imageViews.get(i).isFilled()){
+                    imageViews.get(i).setImageDrawable(getResources().getDrawable(filledImage));
+                    Drawable drawable = imageViews.get(i).getDrawable();
+                    if(drawable instanceof Animatable){
+                        ((Animatable) drawable).start();
+                    }
+                    imageViews.get(i).setFilled(true);
+                }
             }
 
         }
@@ -73,6 +86,6 @@ public class CustomView extends LinearLayout {
             addView(imageView);
         }
 
-        setAnimatedDrawable(imageViews, imageViews.get(2), filledImage, emptyImage);
+        setAnimatedDrawable(imageViews, imageViews.get(startingRating - 1), filledImage, emptyImage);
     }
 }
