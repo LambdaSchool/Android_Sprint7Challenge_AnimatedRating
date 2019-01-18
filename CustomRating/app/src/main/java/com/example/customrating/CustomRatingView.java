@@ -13,14 +13,49 @@ public class CustomRatingView extends AppCompatRatingBar {
 
     public CustomRatingView(Context context) {
         super(context);
-    }
+
+       init(null);    }
 
     public CustomRatingView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+       init(attrs);    }
+
+    public int getMaximum() {
+        return maximum;
+    }
+
+    public void setMaximum(int maximum) {
+        this.maximum = maximum;
+    }
+
+    public int getStarting() {
+        return starting;
+    }
+
+    public void setStarting(int starting) {
+        this.starting = starting;
+    }
+
+    public int getEmpty() {
+        return empty;
+    }
+
+    public void setEmpty(int empty) {
+        this.empty = empty;
+    }
+
+    public int getFilled() {
+        return filled;
+    }
+
+    public void setFilled(int filled) {
+        this.filled = filled;
     }
 
     public CustomRatingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(attrs);
     }
 
     public void init(AttributeSet attrs){
