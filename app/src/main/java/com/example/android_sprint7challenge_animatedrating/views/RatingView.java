@@ -8,15 +8,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.example.android_sprint7challenge_animatedrating.R;
 
 public class RatingView extends View {
     protected Paint paint1;
-    protected int maxRating, startingRating, emptySymbol, filledSymbol, currentRating;
+    protected int maxRating, startingRating, emptySymbol, filledSymbol, currentRating, layoutWidth, xIncrement;
     protected Bitmap bitmapEmpty, bitmapFilled;
+    float touchXStart, touchXDistance;
 
     public RatingView(Context context) {
         super(context);
@@ -58,9 +59,8 @@ public class RatingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int width = getWidth();
-        int height = getHeight();
-        int xWidth = width / maxRating;
+        layoutWidth = getWidth();
+        xIncrement = layoutWidth / maxRating;
         int xStart = 0;
 
         for (int i = 0; i < maxRating; ++i) {
@@ -69,7 +69,30 @@ public class RatingView extends View {
             } else {
                 canvas.drawBitmap(bitmapEmpty, xStart, 0, paint1);
             }
-            xStart += xWidth;
+            xStart += xIncrement;
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+//        return super.onTouchEvent(event);
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                touchXStart = event.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                layoutWidth = getWidth();
+                xIncrement = layoutWidth / maxRating;
+                currentRating = (int) (event.getX()/xIncrement);
+
+                invalidate();
+
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+        return true;
+
+
     }
 }
