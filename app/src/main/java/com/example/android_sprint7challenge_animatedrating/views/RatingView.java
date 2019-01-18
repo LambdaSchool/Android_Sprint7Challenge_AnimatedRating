@@ -9,12 +9,13 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.example.android_sprint7challenge_animatedrating.R;
 
 public class RatingView extends View {
     protected Paint paint1;
-    protected int max_rating, starting_rating, empty_symbol, filled_symbol;
+    protected int maxRating, startingRating, emptySymbol, filledSymbol, currentRating;
     protected Bitmap bitmapEmpty, bitmapFilled;
 
     public RatingView(Context context) {
@@ -41,20 +42,34 @@ public class RatingView extends View {
 
     public void init(AttributeSet attrs) {
         paint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
+        currentRating = 2;
         if (attrs != null) {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RatingView);
-            max_rating = typedArray.getInt(R.styleable.RatingView_max_rating, 10);
-            starting_rating = typedArray.getInt(R.styleable.RatingView_starting_rating, 2);
-            empty_symbol = typedArray.getResourceId(R.styleable.RatingView_empty_symbol, R.color.colorPrimaryDark);
-            filled_symbol = typedArray.getResourceId(R.styleable.RatingView_filled_symbol, R.color.colorAccent);
+            maxRating = typedArray.getInt(R.styleable.RatingView_max_rating, 10);
+            startingRating = typedArray.getInt(R.styleable.RatingView_starting_rating, 2);
+            emptySymbol = typedArray.getResourceId(R.styleable.RatingView_empty_symbol, R.color.colorPrimaryDark);
+            filledSymbol = typedArray.getResourceId(R.styleable.RatingView_filled_symbol, R.color.colorAccent);
             typedArray.recycle();
+            bitmapEmpty = BitmapFactory.decodeResource(getResources(), emptySymbol);
+            bitmapFilled = BitmapFactory.decodeResource(getResources(), filledSymbol);
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        bitmapEmpty = BitmapFactory.decodeResource(getResources(), empty_symbol);
-        canvas.drawBitmap(bitmapEmpty,0,0,paint1);
+        int width = getWidth();
+        int height = getHeight();
+        int xWidth = width / maxRating;
+        int xStart = 0;
+
+        for (int i = 0; i < maxRating; ++i) {
+            if (i <= currentRating) {
+                canvas.drawBitmap(bitmapFilled, xStart, 0, paint1);
+            } else {
+                canvas.drawBitmap(bitmapEmpty, xStart, 0, paint1);
+            }
+            xStart += xWidth;
+        }
     }
 }

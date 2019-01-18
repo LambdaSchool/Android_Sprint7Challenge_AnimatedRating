@@ -9,7 +9,7 @@
     <com.example.android_sprint7challenge_animatedrating.views.RatingView
         android:id="@+id/rating_view"
         android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:empty_symbol="@android:drawable/star_off"
         app:filled_symbol="@android:drawable/star_on"
