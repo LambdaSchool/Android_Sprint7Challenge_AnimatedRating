@@ -4,6 +4,6 @@
         <attr name="maximum_rating" format="integer"/>
         <attr name="starting_rating" format="integer"/>
         <attr name="empty_symbol" format="reference"/>
-        <attr name="filled_symbol" format="reference"/>
+        <attr name="fill_symbol" format="reference"/>
     </declare-styleable>
 </resources>
