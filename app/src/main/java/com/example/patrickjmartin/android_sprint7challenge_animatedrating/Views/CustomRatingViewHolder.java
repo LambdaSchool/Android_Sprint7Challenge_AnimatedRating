@@ -8,13 +8,14 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 
 import com.example.patrickjmartin.android_sprint7challenge_animatedrating.R;
 
 import java.util.ArrayList;
 
-public class CustomRatingViewHolder extends FrameLayout {
+public class CustomRatingViewHolder extends LinearLayout {
 
     private ArrayList<RatingsView> views;
     private int max_stars, initial_stars, empty_star, full_star;
@@ -51,24 +52,16 @@ public class CustomRatingViewHolder extends FrameLayout {
             full_star = typedArray.getResourceId(R.styleable.CustomRatingViewHolder_full_star, R.color.colorAccent);
             typedArray.recycle();
 
+
             for (int i = 0; i < max_stars; i++) {
                 final RatingsView star = new RatingsView(getContext());
                 views.add(star);
                 if (i < initial_stars) {
                     star.setFull(true);
-                    star.setImageDrawable(getResources().getDrawable(empty_star));
+
                 }
-
-                star.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-
-
-
-
+                star.setImageDrawable(getResources().getDrawable(empty_star));
+                addView(star);
             }
 
 
