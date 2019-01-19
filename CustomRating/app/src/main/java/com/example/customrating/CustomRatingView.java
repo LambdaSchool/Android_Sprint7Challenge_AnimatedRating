@@ -18,7 +18,7 @@ public class CustomRatingView extends LinearLayout {
     public static final int DEFAULT_FILLED = R.drawable.ic_star_black_24dp;
 
     protected Drawable  empty, filled;
-    protected int maximum, starting;
+    protected int maximum, starting, userRating;
 
 
     public CustomRatingView(Context context) {
@@ -60,9 +60,6 @@ public class CustomRatingView extends LinearLayout {
             empty = typedArray.getDrawable(R.styleable.CustomRatingView_empty_symbol);
             filled = typedArray.getDrawable(R.styleable.CustomRatingView_fill_symbol);
             typedArray.recycle();
-
-
-
         }
     }
 
@@ -83,7 +80,7 @@ public class CustomRatingView extends LinearLayout {
     private void updateRatingView() {
         for (int i = 0; i < maximum ; i++) {
             ImageView imageView = (ImageView) this.getChildAt(i);
-            imageView.setImageDrawable(i + 1 <= starting ? filled:empty);
+            imageView.setImageDrawable(i + 1 <= userRating ? filled:empty);
 
         }
     }
@@ -97,6 +94,9 @@ public class CustomRatingView extends LinearLayout {
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    userRating = (int) v.getTag();
+                    drawRatingView();
+
                 }
             });
             addView(imageView);
