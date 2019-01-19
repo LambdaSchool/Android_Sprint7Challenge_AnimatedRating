@@ -9,7 +9,7 @@
     <com.example.patrickjmartin.android_sprint7challenge_animatedrating.Views.CustomRatingViewHolder
         android:id="@+id/star_custom_view"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
