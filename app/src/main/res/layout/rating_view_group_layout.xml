@@ -6,22 +6,22 @@
     android:orientation="horizontal"
     >
 
-    <com.example.android_sprint7challenge_animatedrating.views.RatingView
-        android:id="@+id/rating_view"
-        android:layout_marginTop="100dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:empty_symbol="@android:drawable/star_off"
-        app:filled_symbol="@android:drawable/star_on"
-        app:max_rating="10"
-        app:starting_rating="2"/>
+    <!--<com.example.android_sprint7challenge_animatedrating.views.RatingView-->
+        <!--android:id="@+id/rating_view"-->
+        <!--android:layout_marginTop="100dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:empty_symbol="@android:drawableEmpty/star_off"-->
+        <!--app:filled_symbol="@android:drawableEmpty/star_on"-->
+        <!--app:max_rating="10"-->
+        <!--app:starting_rating="2"/>-->
 
-    <!--<ImageView-->
-        <!--android:id="@+id/image_view"-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:src="@color/colorPrimaryDark"-->
-        <!--/>-->
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/star_full_to_empty"
+        />
 
 
 </LinearLayout>

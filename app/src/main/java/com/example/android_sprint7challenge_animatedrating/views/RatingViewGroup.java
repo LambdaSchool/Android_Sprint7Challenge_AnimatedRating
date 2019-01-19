@@ -35,7 +35,7 @@ public class RatingViewGroup extends FrameLayout {
     public void init(AttributeSet attrs) {
         final View inflatedView = inflate(getContext(), R.layout.rating_view_group_layout, null);
         addView(inflatedView);
-//        ((RatingView) findViewById(R.id.rating_view)).setBackground(getResources().getDrawable(R.drawable.ic_launcher_background));
+//        ((RatingView) findViewById(R.id.rating_view)).setBackground(getResources().getDrawable(R.drawableEmpty.ic_launcher_background));
     }
 
     @Override

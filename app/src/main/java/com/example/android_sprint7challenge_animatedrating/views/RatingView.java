@@ -2,11 +2,14 @@ package com.example.android_sprint7challenge_animatedrating.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,8 +19,9 @@ import com.example.android_sprint7challenge_animatedrating.R;
 public class RatingView extends View {
     protected Paint paint1;
     protected int maxRating, startingRating, emptySymbol, filledSymbol, currentRating, layoutWidth, xIncrement;
-    protected Bitmap bitmapEmpty, bitmapFilled;
-    float touchXStart, touchXDistance;
+    protected Drawable drawableEmpty, drawableFilled;
+    protected Rect drawableRect;
+
 
     public RatingView(Context context) {
         super(context);
@@ -48,12 +52,16 @@ public class RatingView extends View {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RatingView);
             maxRating = typedArray.getInt(R.styleable.RatingView_max_rating, 10);
             startingRating = typedArray.getInt(R.styleable.RatingView_starting_rating, 2);
-            emptySymbol = typedArray.getResourceId(R.styleable.RatingView_empty_symbol, R.color.colorPrimaryDark);
-            filledSymbol = typedArray.getResourceId(R.styleable.RatingView_filled_symbol, R.color.colorAccent);
+            filledSymbol = typedArray.getResourceId(R.styleable.RatingView_empty_symbol, R.color.colorPrimaryDark);
+            emptySymbol = typedArray.getResourceId(R.styleable.RatingView_filled_symbol, R.color.colorAccent);
             typedArray.recycle();
-            bitmapEmpty = BitmapFactory.decodeResource(getResources(), emptySymbol);
-            bitmapFilled = BitmapFactory.decodeResource(getResources(), filledSymbol);
         }
+        layoutWidth = getWidth();
+        xIncrement = layoutWidth / maxRating;
+
+        drawableEmpty = ContextCompat.getDrawable(getContext(), emptySymbol);
+        drawableFilled = ContextCompat.getDrawable(getContext(), filledSymbol);
+        drawableRect = new Rect();
     }
 
     @Override
@@ -64,10 +72,23 @@ public class RatingView extends View {
         int xStart = 0;
 
         for (int i = 0; i < maxRating; ++i) {
+            drawableRect.left = xStart;
+            drawableRect.top = 0;
+            drawableRect.right = xStart + xIncrement;
+            drawableRect.bottom = 100;
             if (i <= currentRating) {
-                canvas.drawBitmap(bitmapFilled, xStart, 0, paint1);
+                drawableEmpty.setBounds(drawableRect);
+                drawableEmpty.draw(canvas);
+
+                if (drawableEmpty instanceof AnimationDrawable) {
+                    ((AnimationDrawable) drawableEmpty).start();
+                }
             } else {
-                canvas.drawBitmap(bitmapEmpty, xStart, 0, paint1);
+                drawableFilled.setBounds(drawableRect);
+                drawableFilled.draw(canvas);
+                if (drawableFilled instanceof Animatable) {
+                    ((Animatable) drawableFilled).start();
+                }
             }
             xStart += xIncrement;
         }
@@ -78,14 +99,12 @@ public class RatingView extends View {
 //        return super.onTouchEvent(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                touchXStart = event.getX();
                 break;
             case MotionEvent.ACTION_MOVE:
                 layoutWidth = getWidth();
                 xIncrement = layoutWidth / maxRating;
-                currentRating = (int) (event.getX()/xIncrement);
+                currentRating = (int) (event.getX() / xIncrement);
                 invalidate();
-
                 break;
             case MotionEvent.ACTION_UP:
                 break;
