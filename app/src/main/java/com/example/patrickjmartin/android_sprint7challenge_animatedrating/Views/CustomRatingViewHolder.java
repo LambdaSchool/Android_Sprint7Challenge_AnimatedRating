@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerTabStrip;
 import android.util.AttributeSet;
@@ -27,7 +28,6 @@ public class CustomRatingViewHolder extends LinearLayout {
 
     private ArrayList<RatingsView> views;
     private int max_stars, initial_stars, empty_star, full_star;
-    private float x1, x2;
     int screenHalf;
 
 
@@ -72,9 +72,10 @@ public class CustomRatingViewHolder extends LinearLayout {
                 views.add(star);
                 if (i < initial_stars) {
                     star.setFull(true);
-
+                    star.setImageDrawable(getResources().getDrawable(full_star));
+                } else {
+                    star.setImageDrawable(getResources().getDrawable(empty_star));
                 }
-                star.setImageDrawable(getResources().getDrawable(empty_star));
                 addView(star);
 
 
