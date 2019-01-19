@@ -6,10 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.customrating.CustomViewGroup
+    <com.example.customrating.CustomRatingView
+        android:id="@+id/customView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
+        app:maximum_rating="5"
+        app:starting_rating="2"
+        app:empty_symbol="@drawable/ic_star_border_black_24dp"
+        app:fill_symbol="@drawable/ic_star_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
