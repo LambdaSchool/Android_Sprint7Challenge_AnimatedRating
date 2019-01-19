@@ -87,9 +87,10 @@ public class CustomRatingViewHolder extends LinearLayout {
                 views.add(star);
                 if (i < initial_stars) {
                     star.setFull(true);
-                    star.setImageDrawable(getResources().getDrawable(full_star));
+                    star.setImageDrawable(getResources().getDrawable(fillAnim));
                 } else {
-                    star.setImageDrawable(getResources().getDrawable(empty_star));
+                    star.setFull(false);
+                    star.setImageDrawable(getResources().getDrawable(emptyAnim));
                 }
 
                 Drawable drawable = star.getDrawable();
@@ -98,8 +99,6 @@ public class CustomRatingViewHolder extends LinearLayout {
                 }
 
                 addView(star);
-
-
             }
 
         }
@@ -110,32 +109,26 @@ public class CustomRatingViewHolder extends LinearLayout {
         removeAllViews();
         views.clear();
 
-        if(current_stars < newTotal) {
-            for(int i = 0; i < max_stars; i++) {
-                final RatingsView star = new RatingsView(getContext());
-                if (i < current_stars) {
-                    star.setFull(true);
-                    star.setImageDrawable(getResources().getDrawable(full_star));
-                } else if (i == newTotal) {
-                    star.setFull(false);
-                    star.setImageDrawable(getResources().getDrawable(emptyAnim));
-                    Drawable drawable = star.getDrawable();
-                    if (drawable instanceof Animatable) {
-                        ((Animatable) drawable).start();
-                    }
 
-
-
-                } else {
-
+        for(int i = 0; i < max_stars; i++) {
+            final RatingsView star = new RatingsView(getContext());
+            if (i < newTotal) {
+                star.setFull(true);
+                star.setImageDrawable(getResources().getDrawable(fillAnim));
+                Drawable drawable = star.getDrawable();
+                if (drawable instanceof Animatable) {
+                    ((Animatable) drawable).start();
                 }
-                addView(star);
+            } else {
+                star.setFull(false);
+                star.setImageDrawable(getResources().getDrawable(empty_star));
             }
-        } else {
 
+            addView(star);
         }
 
-        newTotal = current_stars;
+
+        current_stars = newTotal;
 
     }
 
@@ -147,14 +140,48 @@ public class CustomRatingViewHolder extends LinearLayout {
 
         if(touchLocation < screenHalf) {
             animateRatingViews(current_stars - 1);
-            Toast.makeText(getContext(), "Touched the left side", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Decrease Star Rating", Toast.LENGTH_SHORT).show();
         } else {
             animateRatingViews(current_stars + 1);
-            Toast.makeText(getContext(), "Touched the right side", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Increase Star Rating ", Toast.LENGTH_SHORT).show();
         }
 
 
         return super.onInterceptTouchEvent(ev);
+    }
+
+    public void setStars(int newMaxStars, int  newStartingStars) {
+
+        removeAllViews();
+        views.clear();
+
+        max_stars = newMaxStars;
+        initial_stars = newStartingStars;
+        current_stars = newStartingStars;
+
+        if (newMaxStars < newStartingStars) {
+            newStartingStars = newMaxStars;
+        }
+
+        for (int i = 0; i < newMaxStars; i++) {
+            final RatingsView star = new RatingsView(getContext());
+            views.add(star);
+            if (i < newStartingStars) {
+                star.setFull(true);
+                star.setImageDrawable(getResources().getDrawable(fillAnim));
+            } else {
+                star.setFull(false);
+                star.setImageDrawable(getResources().getDrawable(emptyAnim));
+            }
+
+            Drawable drawable = star.getDrawable();
+            if (drawable instanceof Animatable) {
+                ((Animatable) drawable).start();
+            }
+
+            addView(star);
+        }
+
     }
 
     
