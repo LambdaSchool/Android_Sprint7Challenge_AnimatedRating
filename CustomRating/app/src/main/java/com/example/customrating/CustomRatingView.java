@@ -3,6 +3,7 @@ package com.example.customrating;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.util.AttributeSet;
@@ -94,6 +95,12 @@ public class CustomRatingView extends LinearLayout {
                 public void onClick(View v) {
                     userRating = (int) v.getTag();
                     drawRatingView();
+
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.avd_anim));
+                    final Drawable drawable = imageView.getDrawable();
+                    if (drawable instanceof Animatable){
+                        ((Animatable) drawable).start();
+                    }
 
                 }
             });
