@@ -14,8 +14,6 @@ import android.widget.RatingBar;
 public class CustomRatingView extends LinearLayout {
     public static final int DEFAULT_MAX_RATING = 5;
     public static final int DEFAULT_START_RATING = 2;
-    public static final int DEFAULT_UNFILLED = R.drawable.ic_star_border_black_24dp;
-    public static final int DEFAULT_FILLED = R.drawable.ic_star_black_24dp;
 
     protected Drawable  empty, filled;
     protected int maximum, starting, userRating;
@@ -102,11 +100,5 @@ public class CustomRatingView extends LinearLayout {
             addView(imageView);
 
         }
-    }
-
-    @Override
-    protected synchronized void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        RatingBar ratingBar;
     }
 }
