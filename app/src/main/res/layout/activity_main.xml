@@ -7,21 +7,6 @@
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
-        <com.example.android_sprint7challenge_animatedrating.views.RatingView
-            android:orientation="horizontal"
-            android:id="@+id/rating_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            app:empty_symbol="@drawable/star_full_to_empty"
-            app:filled_symbol="@drawable/star_empty_to_full"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:max_rating="10"
-            app:starting_rating="2" />
-
     <EditText
         android:id="@+id/edit_rating"
         android:layout_width="match_parent"
@@ -30,16 +15,31 @@
         android:inputType="number"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rating_view" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_set_rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Set Rating"
+        android:layout_marginTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_rating" />
+
+    <com.example.android_sprint7challenge_animatedrating.views.RatingView
+        android:orientation="horizontal"
+        android:id="@+id/rating_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        app:empty_symbol="@drawable/star_full_to_empty"
+        app:filled_symbol="@drawable/star_empty_to_full"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_set_rating"
+        app:max_rating="10"
+        app:starting_rating="2" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -18,7 +18,7 @@ import com.example.android_sprint7challenge_animatedrating.R;
 
 public class RatingView extends View {
     protected Paint paint1;
-    protected int maxRating, startingRating, emptySymbol, filledSymbol, currentRating, layoutWidth, xIncrement, previousRating;
+    protected int maxRating, startingRating, emptySymbol, filledSymbol, currentRating, layoutWidth, xIncrement;
     protected Drawable drawableEmpty, drawableFilled;
     protected Rect drawableRect;
 
@@ -48,6 +48,7 @@ public class RatingView extends View {
     public void init(AttributeSet attrs) {
         paint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
         currentRating = 2;
+
         if (attrs != null) {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RatingView);
             maxRating = typedArray.getInt(R.styleable.RatingView_max_rating, 10);
@@ -76,7 +77,7 @@ public class RatingView extends View {
             drawableRect.top = 0;
             drawableRect.right = xStart + xIncrement;
             drawableRect.bottom = 100;
-            if (i <= currentRating) {
+            if (i < currentRating) {
                 drawableFilled.setBounds(drawableRect);
                 if (drawableFilled instanceof Animatable) {
                     ((Animatable) drawableFilled).start();
@@ -91,19 +92,15 @@ public class RatingView extends View {
             }
             xStart += xIncrement;
         }
-        previousRating = currentRating;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        return super.onTouchEvent(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_MOVE:
-                layoutWidth = getWidth();
-                xIncrement = layoutWidth / maxRating;
-                currentRating = (int) (event.getX() / xIncrement);
+                currentRating = (int) ((event.getX() / xIncrement) + 1);
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
