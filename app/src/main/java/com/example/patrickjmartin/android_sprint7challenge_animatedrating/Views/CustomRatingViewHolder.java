@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
+import com.example.patrickjmartin.android_sprint7challenge_animatedrating.R;
+
 import java.util.ArrayList;
 
 public class CustomRatingViewHolder extends LinearLayout {
