@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "TestingTag";
+    public static final String TAG = "TestingTag";
     ImageView imageView;
 
     @Override

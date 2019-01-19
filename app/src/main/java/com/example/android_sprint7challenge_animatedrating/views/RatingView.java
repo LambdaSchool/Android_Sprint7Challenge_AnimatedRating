@@ -18,7 +18,7 @@ import com.example.android_sprint7challenge_animatedrating.R;
 
 public class RatingView extends View {
     protected Paint paint1;
-    protected int maxRating, startingRating, emptySymbol, filledSymbol, currentRating, layoutWidth, xIncrement;
+    protected int maxRating, startingRating, emptySymbol, filledSymbol, currentRating, layoutWidth, xIncrement, previousRating;
     protected Drawable drawableEmpty, drawableFilled;
     protected Rect drawableRect;
 
@@ -52,8 +52,8 @@ public class RatingView extends View {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RatingView);
             maxRating = typedArray.getInt(R.styleable.RatingView_max_rating, 10);
             startingRating = typedArray.getInt(R.styleable.RatingView_starting_rating, 2);
-            filledSymbol = typedArray.getResourceId(R.styleable.RatingView_empty_symbol, R.color.colorPrimaryDark);
-            emptySymbol = typedArray.getResourceId(R.styleable.RatingView_filled_symbol, R.color.colorAccent);
+            emptySymbol = typedArray.getResourceId(R.styleable.RatingView_empty_symbol, R.color.colorPrimaryDark);
+            filledSymbol = typedArray.getResourceId(R.styleable.RatingView_filled_symbol, R.color.colorAccent);
             typedArray.recycle();
         }
         layoutWidth = getWidth();
@@ -77,21 +77,21 @@ public class RatingView extends View {
             drawableRect.right = xStart + xIncrement;
             drawableRect.bottom = 100;
             if (i <= currentRating) {
-                drawableEmpty.setBounds(drawableRect);
-                drawableEmpty.draw(canvas);
-
-                if (drawableEmpty instanceof AnimationDrawable) {
-                    ((AnimationDrawable) drawableEmpty).start();
-                }
-            } else {
                 drawableFilled.setBounds(drawableRect);
-                drawableFilled.draw(canvas);
                 if (drawableFilled instanceof Animatable) {
                     ((Animatable) drawableFilled).start();
                 }
+                drawableFilled.draw(canvas);
+            } else {
+                drawableEmpty.setBounds(drawableRect);
+                if (drawableEmpty instanceof AnimationDrawable) {
+                    ((AnimationDrawable) drawableEmpty).start();
+                }
+                drawableEmpty.draw(canvas);
             }
             xStart += xIncrement;
         }
+        previousRating = currentRating;
     }
 
     @Override
