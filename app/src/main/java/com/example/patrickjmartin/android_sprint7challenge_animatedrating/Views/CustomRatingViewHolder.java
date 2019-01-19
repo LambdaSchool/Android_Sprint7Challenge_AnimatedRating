@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 public class CustomRatingViewHolder extends LinearLayout {
 
     private ArrayList<RatingsView> views;
-    private int max_stars, initial_stars, empty_star, full_star;
+    private int max_stars, initial_stars, current_stars, empty_star, full_star, emptyAnim, fillAnim;
     int screenHalf;
 
 
@@ -51,6 +53,8 @@ public class CustomRatingViewHolder extends LinearLayout {
         init(attrs);
     }
 
+
+
     public void init(AttributeSet attrs) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -60,11 +64,22 @@ public class CustomRatingViewHolder extends LinearLayout {
 
         if (attrs != null) {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CustomRatingViewHolder);
-            max_stars = typedArray.getInt(R.styleable.CustomRatingViewHolder_max_stars, 10);
-            initial_stars = typedArray.getInt(R.styleable.CustomRatingViewHolder_initial_stars, 2);
-            empty_star = typedArray.getResourceId(R.styleable.CustomRatingViewHolder_empty_star, R.color.colorPrimaryDark);
-            full_star = typedArray.getResourceId(R.styleable.CustomRatingViewHolder_full_star, R.color.colorAccent);
+            max_stars = typedArray.getInt(R.styleable.CustomRatingViewHolder_max_stars,
+                    10);
+            initial_stars = typedArray.getInt(R.styleable.CustomRatingViewHolder_initial_stars,
+                    2);
+            empty_star = typedArray.getResourceId(R.styleable.CustomRatingViewHolder_empty_star,
+                    R.color.colorPrimaryDark);
+            full_star = typedArray.getResourceId(R.styleable.CustomRatingViewHolder_full_star,
+                    R.color.colorAccent);
+            emptyAnim = typedArray.getResourceId(R.styleable.CustomRatingViewHolder_empty_anim,
+                    R.drawable.ic_launcher_background);
+            fillAnim = typedArray.getResourceId(R.styleable.CustomRatingViewHolder_fill_anim,
+                    R.drawable.ic_launcher_foreground);
+
             typedArray.recycle();
+
+            current_stars = initial_stars;
 
 
             for (int i = 0; i < max_stars; i++) {
@@ -76,6 +91,12 @@ public class CustomRatingViewHolder extends LinearLayout {
                 } else {
                     star.setImageDrawable(getResources().getDrawable(empty_star));
                 }
+
+                Drawable drawable = star.getDrawable();
+                if (drawable instanceof Animatable) {
+                    ((Animatable) drawable).start();
+                }
+
                 addView(star);
 
 
@@ -84,6 +105,39 @@ public class CustomRatingViewHolder extends LinearLayout {
         }
     }
 
+    private void animateRatingViews(int newTotal) {
+
+        removeAllViews();
+        views.clear();
+
+        if(current_stars < newTotal) {
+            for(int i = 0; i < max_stars; i++) {
+                final RatingsView star = new RatingsView(getContext());
+                if (i < current_stars) {
+                    star.setFull(true);
+                    star.setImageDrawable(getResources().getDrawable(full_star));
+                } else if (i == newTotal) {
+                    star.setFull(false);
+                    star.setImageDrawable(getResources().getDrawable(emptyAnim));
+                    Drawable drawable = star.getDrawable();
+                    if (drawable instanceof Animatable) {
+                        ((Animatable) drawable).start();
+                    }
+
+
+
+                } else {
+
+                }
+                addView(star);
+            }
+        } else {
+
+        }
+
+        newTotal = current_stars;
+
+    }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -92,8 +146,10 @@ public class CustomRatingViewHolder extends LinearLayout {
         int touchLocation = (int) ev.getX();
 
         if(touchLocation < screenHalf) {
+            animateRatingViews(current_stars - 1);
             Toast.makeText(getContext(), "Touched the left side", Toast.LENGTH_SHORT).show();
         } else {
+            animateRatingViews(current_stars + 1);
             Toast.makeText(getContext(), "Touched the right side", Toast.LENGTH_SHORT).show();
         }
 
