@@ -135,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                CustomView customView = findViewById(R.id.custom_view);
-                customView.setMaxRating(8);
-                customView.setStartingRating(1);
+             //   CustomView customView = findViewById(R.id.custom_view);
+               // customView.setMaxRating(8);
+                // customView.setStartingRating(1);
             }
         }
 
