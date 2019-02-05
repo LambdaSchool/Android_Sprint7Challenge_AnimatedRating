@@ -38,6 +38,23 @@ public class RatingViewHolder extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }
+    private void setDrawable(int imgView){
+        removeAllViews();
+        view.clear();
+        for (int i = 0; i < imgView; i++) {
+            final StarRatingView ratingView = new StarRatingView(getContext());
+            view.add(ratingView);
+            ratingView.setImageDrawable(getResources().getDrawable(emptyAnimation));
+            ratingView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setAnimateImage(view.indexOf(ratingView));
+                }
+            });
+            addView(ratingView);
+        }
+        setAnimateImage(initialStars);
+    }
 
     private void setAnimateImage(int i){
             for(int j = i; j < view.size(); j++){
@@ -65,6 +82,8 @@ public class RatingViewHolder extends LinearLayout {
 
 
     public void init(AttributeSet attrs){
+        view = new ArrayList<>();
+
         if (attrs != null){
             TypedArray typedArray = getContext().obtainStyledAttributes
                     (attrs, R.styleable.RatingViewHolder);
@@ -76,6 +95,8 @@ public class RatingViewHolder extends LinearLayout {
             emptyStar = typedArray.getResourceId(R.styleable.RatingViewHolder_empty_star, R.drawable.ic_default_empty_star);
             initialStars = typedArray.getInt(R.styleable.RatingViewHolder_initial_rating, 3);
             maxStars = typedArray.getInt(R.styleable.RatingViewHolder_max_rating, 10);
+
+            setDrawable(maxStars);
 
             typedArray.recycle();
         }
