@@ -2,6 +2,8 @@ package com.earthdefensesystem.android_sprint7challenge_animatedrating.Views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -36,6 +38,31 @@ public class RatingViewHolder extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }
+
+    private void setAnimateImage(int i){
+            for(int j = i; j < view.size(); j++){
+                if(view.get(j).isFull()){
+                    view.get(j).setImageDrawable(getResources().getDrawable(emptyAnimation));
+                    animateImage(j);
+                    view.get(j).setFull(false);
+                } else {
+                    if(!view.get(j).isFull()){
+                        view.get(j).setImageDrawable(getResources().getDrawable(fillAnimation));
+                        animateImage(j);
+                        view.get(j).setFull(true);
+                    }
+                }
+
+        }
+    }
+
+    private void animateImage(int i){
+        Drawable drawable = view.get(i).getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
+    }
+
 
     public void init(AttributeSet attrs){
         if (attrs != null){
