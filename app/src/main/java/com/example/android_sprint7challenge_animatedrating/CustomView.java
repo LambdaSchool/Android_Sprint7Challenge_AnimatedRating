@@ -6,8 +6,11 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,23 +64,49 @@ public class CustomView extends LinearLayout {
 
 
 
+    protected void init(AttributeSet attrs) {
+        setOrientation(HORIZONTAL);
+        imageViews = new ArrayList<>();
+
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CustomView);
+        emptyImage = typedArray.getResourceId(R.styleable.CustomView_emptyStar, R.drawable.empty_color2);
+        filledImage = typedArray.getResourceId(R.styleable.CustomView_filledStar, R.drawable.animated);
+        maxRating = typedArray.getInt(R.styleable.CustomView_maxStar, DEF_MAX_RATING);
+        startingRating = typedArray.getInt(R.styleable.CustomView_startingStar, DEF_STARTING_RATING);
+        drawImage(maxRating);
+        typedArray.recycle();
+        setAnimatedDrawable(startingRating - 1);
+
+    }
+
+
+
     private void drawImage(int images){
         removeAllViews();
         imageViews.clear();
-        for(int i = 1; i <= images; i++){
+
+        for(int i = 1; i < maxRating; i++){
             final CustomImageView imageView = new CustomImageView(getContext());
+
+
+
             imageViews.add(imageView);
             imageView.setImageDrawable(getResources().getDrawable(emptyImage));
             imageView.setOnClickListener(new View.OnClickListener(){
+
+
+
                 @Override
                 public void onClick(View v) {
                     setAnimatedDrawable(imageViews.indexOf(imageView));
                 }
             });
+
             addView(imageView);
         }
         setAnimatedDrawable(startingRating - 1);
     }
+
 
     private void setAnimatedDrawable(int index){
         if(imageViews.get(index).isFilled()){
@@ -87,6 +116,7 @@ public class CustomView extends LinearLayout {
                     animateImage(i, false);
                 }
             }
+
         }else{
             for(int i = index; i >= 0; i--){
                 if(!imageViews.get(i).isFilled()){
@@ -106,19 +136,17 @@ public class CustomView extends LinearLayout {
         imageViews.get(i).setFilled(filled);
     }
 
-    protected void init(AttributeSet attrs){
-        setOrientation(HORIZONTAL);
-        imageViews = new ArrayList<>();
+        @Override
+        public boolean onInterceptTouchEvent(MotionEvent ev) {
 
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CustomView);
-        emptyImage =  typedArray.getResourceId(R.styleable.CustomView_emptyStar, R.drawable.empty_color2);
-        filledImage =  typedArray.getResourceId(R.styleable.CustomView_filledStar, R.drawable.animated);
-        maxRating = typedArray.getInt(R.styleable.CustomView_maxStar, DEF_MAX_RATING);
-        startingRating = typedArray.getInt(R.styleable.CustomView_startingStar, DEF_STARTING_RATING);
-        typedArray.recycle();
 
-        drawImage(maxRating);
+            int touchLocation = (int) ev.getX();
 
-        setAnimatedDrawable(startingRating - 1);
+
+
+            return super.onInterceptTouchEvent(ev);
+
+
     }
+
 }
