@@ -44,7 +44,7 @@ public class RatingViewHolder extends LinearLayout {
         for (int i = 0; i < imgView; i++) {
             final StarRatingView ratingView = new StarRatingView(getContext());
             view.add(ratingView);
-            ratingView.setImageDrawable(getResources().getDrawable(emptyAnimation));
+            ratingView.setImageDrawable(getResources().getDrawable(fullStar));
             ratingView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -57,20 +57,24 @@ public class RatingViewHolder extends LinearLayout {
     }
 
     private void setAnimateImage(int i){
-            for(int j = i; j < view.size(); j++){
-                if(view.get(j).isFull()){
+        if (i > initialStars) {
+            for(int j = 0; j <= i; j++) {
+                if (!view.get(j).isFull()) {
+                    view.get(j).setImageDrawable(getResources().getDrawable(fillAnimation));
+                    animateImage(j);
+                    view.get(j).setFull(true);
+                }
+            }
+        }else {
+            for(int j = i; j <= initialStars; j++) {
+                if (view.get(j).isFull()) {
                     view.get(j).setImageDrawable(getResources().getDrawable(emptyAnimation));
                     animateImage(j);
                     view.get(j).setFull(false);
-                } else {
-                    if(!view.get(j).isFull()){
-                        view.get(j).setImageDrawable(getResources().getDrawable(fillAnimation));
-                        animateImage(j);
-                        view.get(j).setFull(true);
-                    }
                 }
-
+            }
         }
+        initialStars = i;
     }
 
     private void animateImage(int i){
@@ -79,7 +83,12 @@ public class RatingViewHolder extends LinearLayout {
             ((Animatable) drawable).start();
         }
     }
-
+//    } else {
+//        if(!view.get(i).isFull()){
+//            view.get(i).setImageDrawable(getResources().getDrawable(fillAnimation));
+//            animateImage(i);
+//            view.get(i).setFull(true);
+//        }
 
     public void init(AttributeSet attrs){
         view = new ArrayList<>();
