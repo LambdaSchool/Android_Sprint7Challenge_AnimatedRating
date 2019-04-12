@@ -50,6 +50,8 @@ public class HeartLifeGauge extends LinearLayout {
     }
 
 
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -91,22 +93,42 @@ public class HeartLifeGauge extends LinearLayout {
         return true;
     }
 
+    public void setEmptyToFullDrawable(int emptyToFullDrawable) {
+        this.emptyToFullDrawable = getResources().getDrawable(emptyToFullDrawable);
+       //updateHearts();
+    }
+
+    public void setFullToEmptyDrawable(int fullToEmptyDrawable) {
+        this.fullToEmptyDrawable = getResources().getDrawable(fullToEmptyDrawable);
+       // updateHearts();
+    }
+
     private void init(AttributeSet attrs) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         maxHearts = 10;
         startingHearts = 3;
+        fullToEmptyDrawable = getResources().getDrawable(R.drawable.avd_heart_full_to_empty);
+        emptyToFullDrawable = getResources().getDrawable(R.drawable.avd_heart_empty_to_full);
 
         if (attrs != null) {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.HeartLifeGauge);
             startingHearts = typedArray.getInt(R.styleable.HeartLifeGauge_starting_health, 3);
             maxHearts = typedArray.getInt(R.styleable.HeartLifeGauge_max_health, 10);
+            emptyToFullDrawable = typedArray.getDrawable(R.styleable.HeartLifeGauge_filled_symbol);
+            fullToEmptyDrawable = typedArray.getDrawable(R.styleable.HeartLifeGauge_empty_symbol);
+        }
+
+        if(emptyToFullDrawable == null){
+            emptyToFullDrawable = getResources().getDrawable(R.drawable.avd_heart_empty_to_full);
+        }
+
+        if(fullToEmptyDrawable == null){
+            fullToEmptyDrawable = getResources().getDrawable(R.drawable.avd_heart_full_to_empty);
         }
 
         displayWidth = displayMetrics.widthPixels;
-        fullToEmptyDrawable = getResources().getDrawable(R.drawable.avd_heart_full_to_empty);
-        emptyToFullDrawable = getResources().getDrawable(R.drawable.avd_heart_empty_to_full);
         currentHealth = startingHearts;
         heartSize = displayWidth / maxHearts;
         heartArr = new ImageView[maxHearts];
@@ -149,6 +171,24 @@ public class HeartLifeGauge extends LinearLayout {
         }
     }
 
+ /*   public void updateHearts(){
+        boolean updatedHealthyHearts = false;
+        for (int i = 0; i < heartArr.length; ++i) {
+            if (!updatedHealthyHearts) {
+                for (int j = 0; j < currentHealth; j++) {
+                    heartArr[i] = new ImageView(getContext());
+                    heartArr[i].setImageDrawable(emptyToFullDrawable);
+                    heartArr[i].setLayoutParams(new LayoutParams(heartSize, heartSize));
+                    i++;
+                }
+                updatedHealthyHearts = true;
+            }
+            heartArr[i] = new ImageView(getContext());
+            heartArr[i].setImageDrawable(fullToEmptyDrawable);
+            heartArr[i].setLayoutParams(new LayoutParams(heartSize, heartSize));
+        }
+    }*/
+
     public void reduceHeart() {
         if (currentHealth > 0) {
             heartArr[currentHealth - 1].setImageDrawable(fullToEmptyDrawable);
@@ -161,18 +201,9 @@ public class HeartLifeGauge extends LinearLayout {
         }
     }
 
-    public void updateViews() {
-
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
-        displayWidth = this.getWidth() / maxHearts;
-        for (int i = 0; i < heartArr.length; ++i) {
-            heartArr[i].requestLayout();
-            heartArr[i].setLayoutParams(new LayoutParams(heartSize, heartSize));
-        }
-
+        heartSize = this.getWidth() / maxHearts;
         super.onDraw(canvas);
     }
 }
