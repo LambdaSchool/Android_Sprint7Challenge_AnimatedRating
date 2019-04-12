@@ -7,6 +7,8 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.DisplayCutout;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -45,6 +47,18 @@ public class RatingsView extends LinearLayout {
             typedArray.recycle();
             drawStars();
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int halfway = getWidth() / 2;
+        if(event.getX() < halfway){
+            initialStars -= 1;
+        }else{
+            initialStars += 1;
+        }
+        drawStars();
+        return false;
     }
 
     public void drawStars() {
