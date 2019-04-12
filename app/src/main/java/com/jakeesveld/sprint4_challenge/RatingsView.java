@@ -36,8 +36,8 @@ public class RatingsView extends LinearLayout {
         init(attrs);
     }
 
-    public void init(AttributeSet attrs){
-        if(attrs != null){
+    public void init(AttributeSet attrs) {
+        if (attrs != null) {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RatingsView);
             maxStars = typedArray.getInt(R.styleable.RatingsView_max_stars, 10);
             initialStars = typedArray.getInt(R.styleable.RatingsView_initial_stars, 5);
@@ -52,16 +52,16 @@ public class RatingsView extends LinearLayout {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int halfway = getWidth() / 2;
-        if(event.getX() < halfway){
+        if (event.getX() < halfway) {
             initialStars -= 1;
-        }else{
+        } else {
             initialStars += 1;
         }
         drawStars(false);
         return false;
     }
 
-    public void setStars(int maxStars, int initialStars){
+    public void setStars(int maxStars, int initialStars) {
         this.maxStars = maxStars;
         this.initialStars = initialStars;
         drawStars(true);
@@ -69,29 +69,31 @@ public class RatingsView extends LinearLayout {
 
     public void drawStars(boolean firstDraw) {
         removeAllViews();
-        if(initialStars > maxStars){
+        if (initialStars > maxStars) {
             initialStars = maxStars;
-        }else if(initialStars < 0){
+        } else if (initialStars < 0) {
             initialStars = 0;
         }
 
-        for(int i = 0; i <= maxStars; i++){
+        for (int i = 0; i <= maxStars; i++) {
             final ImageView star = new ImageView(getContext());
-            if(i < initialStars){
+            if (i <= initialStars) {
                 star.setImageDrawable(getResources().getDrawable(fillStar));
-                if(star.getDrawable() instanceof Animatable){
+                if (star.getDrawable() instanceof Animatable) {
                     ((Animatable) star.getDrawable()).start();
                 }
-            }else if (i > initialStars){
+            } else if (i == initialStars) {
                 star.setImageDrawable(getResources().getDrawable(emptyStar));
-                if(star.getDrawable() instanceof Animatable){
-                    if(firstDraw || i == initialStars) {
-                        ((Animatable) star.getDrawable()).start();
-                    }
+                if (star.getDrawable() instanceof Animatable) {
+                    ((Animatable) star.getDrawable()).start();
                 }
+            } else {
+                star.setImageDrawable(getResources().getDrawable(R.drawable.star_empty));
+
             }
             addView(star);
         }
+
 
     }
 }
