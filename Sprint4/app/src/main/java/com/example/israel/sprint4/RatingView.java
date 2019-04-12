@@ -101,7 +101,16 @@ public class RatingView extends LinearLayout {
         }
 
         if (this.rating < oldRating) { // empty the symbol
+            for (int i = oldRating - 1; i > this.rating - 1; --i) {
+                SymbolView symbolView = symbolViews.get(i);
 
+                symbolView.setImageDrawable(getContext().getDrawable(emptySymbol));
+                Drawable drawable = symbolView.getDrawable();
+                if (drawable instanceof Animatable) {
+                    Animatable animatable = (Animatable)drawable;
+                    animatable.start();
+                }
+            }
         } else { // fill the symbol
             for (int i = oldRating; i < this.rating; ++i) {
                 SymbolView symbolView = symbolViews.get(i);
