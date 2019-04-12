@@ -19,6 +19,7 @@ public class AnimatedRatingBar extends LinearLayout {
     private ArrayList<RatingSymbol> ratingSymbols;
     private final int DEFAULT_MAX_RATING = 10;
     private final int DEFAULT_STARTING_RATING = 5;
+    private int currentRating = DEFAULT_STARTING_RATING;
 
     public AnimatedRatingBar(Context context) {
         super(context);
@@ -76,7 +77,7 @@ public class AnimatedRatingBar extends LinearLayout {
         for (int i = 0; i < maxRating; i++) {
             if (i <= index) {
                 ratingSymbols.get(i).setFilled(true);
-                if (ratingSymbols.get(i).getDrawable() instanceof AnimatedVectorDrawable) {
+                 if (ratingSymbols.get(i).getDrawable() instanceof AnimatedVectorDrawable && i > currentRating - 1) {
                     ratingSymbols.get(i).setImageResource(emptySymbolId);
                     ((AnimatedVectorDrawable) ratingSymbols.get(i).getDrawable()).start();
                 } else {
@@ -84,12 +85,29 @@ public class AnimatedRatingBar extends LinearLayout {
                 }
             } else {
                 ratingSymbols.get(i).setFilled(false);
-                if (ratingSymbols.get(i).getDrawable() instanceof AnimatedVectorDrawable) {
+                if (ratingSymbols.get(i).getDrawable() instanceof AnimatedVectorDrawable && i <= currentRating - 1) {
                     ratingSymbols.get(i).setImageResource(filledSymbolId);
                     ((AnimatedVectorDrawable) ratingSymbols.get(i).getDrawable()).start();
+                } else {
+                    ratingSymbols.get(i).setImageResource(emptySymbolId);
                 }
-                ratingSymbols.get(i).setImageResource(emptySymbolId);
             }
         }
+        currentRating = index + 1;
+    }
+
+    public void setRating(int rating) {
+        if (rating >= 0 && rating <= maxRating) {
+            changeRating(rating - 1);
+        }
+    }
+
+    public int getRating() {
+        int count = 0;
+        for (int i = 0; i < ratingSymbols.size(); i++) {
+            if (ratingSymbols.get(i).isFilled())
+                count++;
+        }
+        return count;
     }
 }
