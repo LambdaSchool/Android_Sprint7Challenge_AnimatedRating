@@ -45,7 +45,7 @@ public class RatingsView extends LinearLayout {
             fillStar = typedArray.getResourceId(R.styleable.RatingsView_fill_star, R.drawable.avd_anim_empty_fill);
 
             typedArray.recycle();
-            drawStars();
+            drawStars(true);
         }
     }
 
@@ -57,11 +57,11 @@ public class RatingsView extends LinearLayout {
         }else{
             initialStars += 1;
         }
-        drawStars();
+        drawStars(false);
         return false;
     }
 
-    public void drawStars() {
+    public void drawStars(boolean firstDraw) {
         removeAllViews();
 
         for(int i = 0; i < maxStars; i++){
@@ -74,7 +74,9 @@ public class RatingsView extends LinearLayout {
             }else{
                 star.setImageDrawable(getResources().getDrawable(emptyStar));
                 if(star.getDrawable() instanceof Animatable){
-                    ((Animatable) star.getDrawable()).start();
+                    if(firstDraw || i == initialStars - 1) {
+                        ((Animatable) star.getDrawable()).start();
+                    }
                 }
             }
             addView(star);
