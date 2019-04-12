@@ -22,16 +22,20 @@ public class MainActivity extends AppCompatActivity {
         getRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), Integer.toString(arb.getRating()),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Rating: " + Integer.toString(arb.getRating()),Toast.LENGTH_LONG).show();
             }
         });
         Button setRatingButton = findViewById(R.id.set_rating_button);
         setRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int rating = Integer.parseInt(editText.getText().toString());
-                if (rating >= 0 && rating <= arb.getMaxRating())
-                    arb.setRating(rating);
+                try {
+                    if (editText.getText().toString().trim().length() > 0) {
+                        int rating = Integer.parseInt(editText.getText().toString());
+                        if (rating >= 0 && rating <= arb.getMaxRating())
+                            arb.setRating(rating);
+                    }
+                } catch (NumberFormatException e) {}
             }
         });
 
