@@ -10,10 +10,22 @@ public class RatingView extends ViewGroup {
 
     public RatingView(Context context) {
         super(context);
+
+        init(null);
     }
 
     public RatingView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        init(attrs);
+    }
+
+    private void init(AttributeSet attrs) {
+        if (attrs != null) {
+
+        }
+
+
     }
 
     @Override
