@@ -1,14 +1,10 @@
 package com.example.customstarrating;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.ImageView;
 
 public class StarRating extends android.support.v7.widget.AppCompatImageView {
     int starsAmount = 10;
@@ -33,17 +29,17 @@ public class StarRating extends android.support.v7.widget.AppCompatImageView {
     private void init(Context context, int state) {//0= Empty, 1=Full, 2=filling, 3=emptying
         switch(state) {
             case 0:
-                setImageResource(R.drawable.avd_star_empty_to_full);
+                setImageResource(R.drawable.star1_empty_to_full);
                 break;
             case 1:
-                setImageResource(R.drawable.avd_star_full_to_empty);
+                setImageResource(R.drawable.star1_full_to_empty);
                 break;
             case 2:
-                setImageResource(R.drawable.avd_star_empty_to_full);
+                setImageResource(R.drawable.star1_empty_to_full);
                 fillStar();
                 break;
             case 3:
-                setImageResource(R.drawable.avd_star_full_to_empty);
+                setImageResource(R.drawable.star1_full_to_empty);
                 emptyStar();
                 break;
 
@@ -51,12 +47,12 @@ public class StarRating extends android.support.v7.widget.AppCompatImageView {
 
     }
 
-    public void fillStar() {
+    private void fillStar() {
         Drawable drawable = getDrawable();
         ((AnimatedVectorDrawable)drawable).start();
     }
 
-    public void emptyStar() {
+    private void emptyStar() {
         Drawable drawable = getDrawable();
         ((AnimatedVectorDrawable)drawable).start();
     }

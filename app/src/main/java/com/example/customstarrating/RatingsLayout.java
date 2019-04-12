@@ -56,7 +56,7 @@ public class RatingsLayout extends LinearLayout {
 
     public void addStar() {
         removeAllViews();
-        starRating++;
+        if (starRating < starNumberTotal) starRating++;
         for (int i = 0; i < starNumberTotal; ++i) {
             if (i < starRating) {
                 if (i == starRating - 1) {
@@ -81,6 +81,26 @@ public class RatingsLayout extends LinearLayout {
                 addView(new StarRating(getContext(), 0));
             }
         }
-        starRating--;
+        if (starRating > 0) starRating--;
+    }
+
+    private void refreshStars() {
+        removeAllViews();
+        for (int i = 0; i < starNumberTotal; ++i) {
+            if (i < starRating) {
+                addView(new StarRating(getContext(), 1));
+            } else {
+                addView(new StarRating(getContext(), 0));
+            }
+        }
+    }
+
+    public int getStarRating() {
+        return starRating;
+    }
+
+    public void setStarRating(int starRating) {
+        this.starRating = starRating;
+        refreshStars();
     }
 }
