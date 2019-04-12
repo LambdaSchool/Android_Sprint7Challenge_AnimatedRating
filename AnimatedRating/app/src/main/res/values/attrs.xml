@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <declare-styleable name="CustomRating" >
+        <attr name="maxRating" format="integer"/>
+        <attr name="defaultRating" format="integer"/>
+        <attr name="emptyStar" format="reference"/>
+        <attr name="filledStar" format="reference"/>
+    </declare-styleable>
+</resources>
