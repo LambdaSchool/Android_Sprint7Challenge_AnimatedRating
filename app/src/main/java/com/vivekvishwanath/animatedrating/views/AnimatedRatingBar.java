@@ -2,6 +2,7 @@ package com.vivekvishwanath.animatedrating.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -63,7 +64,7 @@ public class AnimatedRatingBar extends LinearLayout {
             }
             ratingSymbols.add(ratingSymbol);
             addView(ratingSymbol);
-            ratingSymbol.getLayoutParams().width = 50;
+            ratingSymbol.getLayoutParams().width = getScreenWidth() / maxRating;
             ratingSymbol.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -113,5 +114,10 @@ public class AnimatedRatingBar extends LinearLayout {
 
     public int getMaxRating() {
         return maxRating;
+    }
+
+    public int getScreenWidth() {
+        int width= getResources().getDisplayMetrics().widthPixels;
+        return width;
     }
 }
