@@ -61,8 +61,19 @@ public class RatingsView extends LinearLayout {
         return false;
     }
 
+    public void setStars(int maxStars, int initialStars){
+        this.maxStars = maxStars;
+        this.initialStars = initialStars;
+        drawStars(true);
+    }
+
     public void drawStars(boolean firstDraw) {
         removeAllViews();
+        if(initialStars > maxStars){
+            initialStars = maxStars;
+        }else if(initialStars < 0){
+            initialStars = 0;
+        }
 
         for(int i = 0; i < maxStars; i++){
             final ImageView star = new ImageView(getContext());
