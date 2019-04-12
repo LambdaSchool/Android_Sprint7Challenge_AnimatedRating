@@ -5,7 +5,7 @@
 
         <attr name="maxRating" format="integer"/>
         <attr name="rating" format="integer"/>
-        <attr name="emptySymbol" format="integer"/>
+        <attr name="emptySymbol" format="reference"/>
         <attr name="filledSymbol" format="integer"/>
 
     </declare-styleable>
