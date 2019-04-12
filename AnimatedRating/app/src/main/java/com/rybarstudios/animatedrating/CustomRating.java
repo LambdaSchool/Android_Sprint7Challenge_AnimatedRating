@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class CustomRating extends LinearLayout {
     private static final int MAX_RATING = 10;
     private static final int STARTING_RATING = 5;
 
-    private int emptyStar, filledStar, maxRating, defaultRating;
+    private int emptyStar, filledStar, maxRating, defaultRating, currentRating = STARTING_RATING;
     private ArrayList<CustomImage> imageViews;
 
     public CustomRating(Context context) {
@@ -63,6 +64,7 @@ public class CustomRating extends LinearLayout {
             imageView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+                    currentRating = imageViews.indexOf(imageView) + 1;
                     setAnimatedDrawable(imageViews.indexOf(imageView));
                 }
             });
@@ -96,6 +98,7 @@ public class CustomRating extends LinearLayout {
             ((Animatable) drawable).start();
         }
         imageViews.get(i).setFilled(filled);
+        Toast.makeText(getContext(), "Rating set to " + currentRating, Toast.LENGTH_SHORT).show();
     }
 
     public int getMaxRating() {

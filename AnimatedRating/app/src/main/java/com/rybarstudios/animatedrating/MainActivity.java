@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CustomRating customRating = findViewById(R.id.custom_rating);
-        customRating.setMaxRating(5);
-        customRating.setDefaultRating(1);
+        customRating.setMaxRating(10);
+        customRating.setDefaultRating(5);
     }
 }
