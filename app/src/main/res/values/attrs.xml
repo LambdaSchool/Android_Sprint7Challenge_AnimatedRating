@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <declare-styleable name="AnimatedRating">
+        <attr name="max_rating" format="integer"/>
+        <attr name="start_rating" format="integer"/>
+        <attr name="is_filled" format="boolean"/>
+    </declare-styleable>
+</resources>

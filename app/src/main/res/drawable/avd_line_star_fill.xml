@@ -1,0 +1,30 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="line_to_star"
+            android:width="210dp"
+            android:height="297dp"
+            android:viewportWidth="210"
+            android:viewportHeight="297">
+            <path
+                android:name="line"
+                android:pathData="M 8.315 54.339 L 8.315 235.768"
+                android:fillColor="#000"
+                android:strokeColor="#000000"
+                android:strokeWidth="5"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="line">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:duration="1000"
+                android:valueFrom="M 8.315 54.339 L 8.315 64.418 L 8.315 74.498 L 8.315 94.657 L 8.315 114.815 L 8.315 134.974 L 8.315 155.133 L 8.315 175.292 L 8.315 195.45 L 8.315 215.609 L 8.315 235.768"
+                android:valueTo="M 10.297 123.212 L 75.595 114.438 L 105.386 55.672 L 133.909 115.063 L 199.003 125.236 L 151.333 170.716 L 161.774 235.768 L 103.789 204.485 L 45.147 234.517 L 56.981 169.703 L 10.297 123.212"
+                android:valueType="pathType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+</animated-vector>
