@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.vivekvishwanath.animatedrating.R;
@@ -61,6 +62,24 @@ public class AnimatedRatingBar extends LinearLayout {
             ratingSymbols.add(ratingSymbol);
             addView(ratingSymbol);
             ratingSymbol.getLayoutParams().width = 50;
+            ratingSymbol.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    changeRating(ratingSymbols.indexOf(ratingSymbol));
+                }
+            });
+        }
+    }
+
+    public void changeRating(int index) {
+        for (int i = 0; i < maxRating; i++) {
+            if (i <= index) {
+                ratingSymbols.get(i).setFilled(true);
+                ratingSymbols.get(i).setImageResource(filledSymbolId);
+            } else {
+                ratingSymbols.get(i).setFilled(false);
+                ratingSymbols.get(i).setImageResource(emptySymbolId);
+            }
         }
     }
 }
