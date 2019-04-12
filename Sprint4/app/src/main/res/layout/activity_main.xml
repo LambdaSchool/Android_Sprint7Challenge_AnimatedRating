@@ -15,7 +15,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:maxRating="5"
         app:rating="3"
-        app:emptySymbol="@drawable/avd_star_filled_to_empty">
+        app:emptySymbol="@drawable/avd_star_filled_to_empty"
+        app:filledSymbol="@drawable/avd_star_empty_to_filled">
 
     </com.example.israel.sprint4.RatingView>
 
