@@ -4,8 +4,8 @@
     <aapt:attr name="android:drawable">
         <vector
             android:name="vector"
-            android:width="297dp"
-            android:height="297dp"
+            android:width="24dp"
+            android:height="24dp"
             android:viewportWidth="297"
             android:viewportHeight="297">
             <path
@@ -72,9 +72,9 @@
                 android:name="path_10"
                 android:pathData="M 202.25 221.405 L 148.294 192.613 L 93.987 220.738 L 104.696 160.525 L 61.166 117.567 L 121.741 109.146 L 149.145 54.471 L 175.873 109.479 L 236.34 118.646 L 192.283 161.065 Z"
                 android:fillColor="#000000"
-                android:fillAlpha="0"
                 android:strokeAlpha="0"
-                android:trimPathStart="1"/>
+                android:fillAlpha="0"
+                android:trimPathStart="0"/>
         </vector>
     </aapt:attr>
     <target android:name="path_2">
@@ -193,7 +193,7 @@
                 android:valueFrom="1"
                 android:valueTo="0"
                 android:valueType="floatType"
-                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                android:interpolator="@android:anim/linear_interpolator"/>
         </aapt:attr>
     </target>
     <target android:name="path_10">

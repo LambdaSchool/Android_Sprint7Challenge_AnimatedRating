@@ -8,8 +8,9 @@ import android.widget.LinearLayout;
 
 public class RatingsLayout extends LinearLayout {
 
-    int starNumberTotal = 10;
-    int starRating = 5;
+    private int starNumberTotal = 10;
+    private int starRating = 5;
+    private int stateModifier = 0;
 
     public RatingsLayout(Context context) {
         super(context);
@@ -37,14 +38,16 @@ public class RatingsLayout extends LinearLayout {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RatingsLayout);
             starNumberTotal = typedArray.getInteger(R.styleable.RatingsLayout_max_rating, 10);
             starRating = typedArray.getInteger(R.styleable.RatingsLayout_starting_rating, 3);
+            boolean modify = typedArray.getBoolean(R.styleable.RatingsLayout_alternate_stars, false);
+            if (modify) stateModifier = 4;
             typedArray.recycle();
         }
 
         for (int i = 0; i < starNumberTotal; ++i) {
             if (i < starRating) {
-                addView(new StarRating(getContext(), 1));
+                addView(new StarRating(getContext(), 1 + stateModifier));
             } else {
-                addView(new StarRating(getContext(), 0));
+                addView(new StarRating(getContext(), 0 + stateModifier));
             }
         }
 
@@ -57,11 +60,11 @@ public class RatingsLayout extends LinearLayout {
         for (int i = 0; i < starNumberTotal; ++i) {
             if (i < starRating) {
                 if (i == starRating - 1) {
-                    addView(new StarRating(getContext(), 2));
+                    addView(new StarRating(getContext(), 2 + stateModifier));
                 } else
-                    addView(new StarRating(getContext(), 1));
+                    addView(new StarRating(getContext(), 1 + stateModifier));
             } else {
-                addView(new StarRating(getContext(), 0));
+                addView(new StarRating(getContext(), 0 + stateModifier));
             }
         }
     }
@@ -71,11 +74,11 @@ public class RatingsLayout extends LinearLayout {
         for (int i = 0; i < starNumberTotal; ++i) {
             if (i < starRating) {
                 if (i == starRating - 1) {
-                    addView(new StarRating(getContext(), 3));
+                    addView(new StarRating(getContext(), 3 + stateModifier));
                 } else
-                    addView(new StarRating(getContext(), 1));
+                    addView(new StarRating(getContext(), 1 + stateModifier));
             } else {
-                addView(new StarRating(getContext(), 0));
+                addView(new StarRating(getContext(), 0 + stateModifier));
             }
         }
         if (starRating > 0) starRating--;
@@ -85,9 +88,9 @@ public class RatingsLayout extends LinearLayout {
         removeAllViews();
         for (int i = 0; i < starNumberTotal; ++i) {
             if (i < starRating) {
-                addView(new StarRating(getContext(), 1));
+                addView(new StarRating(getContext(), 1 + stateModifier));
             } else {
-                addView(new StarRating(getContext(), 0));
+                addView(new StarRating(getContext(), 0 + stateModifier));
             }
         }
     }

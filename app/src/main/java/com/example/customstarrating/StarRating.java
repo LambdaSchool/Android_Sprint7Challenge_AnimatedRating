@@ -7,6 +7,12 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 public class StarRating extends android.support.v7.widget.AppCompatImageView {
+    public static final int STAR_1_EMPTY_TO_FULL = R.drawable.star1_empty_to_full;
+    public static final int STAR_1_FULL_TO_EMPTY = R.drawable.star1_full_to_empty;
+    public static final int STAR_2_EMPTY_TO_FULL = R.drawable.star2_empty_to_fill2;
+    public static final int STAR_2_EMPTY = R.drawable.star2_blank;
+    public static final int STAR_2_FULL_TO_EMPTY = R.drawable.star2_full_to_empty;
+
     int starsAmount = 10;
 
 
@@ -26,23 +32,41 @@ public class StarRating extends android.support.v7.widget.AppCompatImageView {
     }
 
 
-    private void init(Context context, int state) {//0= Empty, 1=Full, 2=filling, 3=emptying
+    //style 1 states
+    //0= Empty, 1=Full, 2=filling, 3=emptying
+    //style 2 states
+    //4= Empty, 5=Full, 6=filling, 7=emptying
+
+    private void init(Context context, int state) {
         switch(state) {
             case 0:
-                setImageResource(R.drawable.star1_empty_to_full);
+                setImageResource(STAR_1_EMPTY_TO_FULL);
                 break;
             case 1:
-                setImageResource(R.drawable.star1_full_to_empty);
+                setImageResource(STAR_1_FULL_TO_EMPTY);
                 break;
             case 2:
-                setImageResource(R.drawable.star1_empty_to_full);
+                setImageResource(STAR_1_EMPTY_TO_FULL);
                 fillStar();
                 break;
             case 3:
-                setImageResource(R.drawable.star1_full_to_empty);
+                setImageResource(STAR_1_FULL_TO_EMPTY);
                 emptyStar();
                 break;
-
+            case 4:
+                setImageResource(STAR_2_EMPTY);
+                break;
+            case 5:
+                setImageResource(STAR_2_FULL_TO_EMPTY);
+                break;
+            case 6:
+                setImageResource(STAR_2_EMPTY_TO_FULL);
+                fillStar();
+                break;
+            case 7:
+                setImageResource(STAR_2_FULL_TO_EMPTY);
+                emptyStar();
+                break;
         }
 
     }

@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <com.example.customstarrating.RatingsLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:alternate_stars="true"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/star_rating_layout"
         android:layout_width="match_parent"
