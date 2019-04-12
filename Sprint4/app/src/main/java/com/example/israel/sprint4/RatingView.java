@@ -28,8 +28,8 @@ public class RatingView extends LinearLayout {
     }
 
     private void init(AttributeSet attrs) {
-        setOrientation(LinearLayout.HORIZONTAL);
 
+        // attributes
         if (attrs != null) {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RatingView);
             maxRating = typedArray.getInteger(R.styleable.RatingView_maxRating, MIN_RATING);
@@ -43,15 +43,19 @@ public class RatingView extends LinearLayout {
 
             emptySymbol = typedArray.getResourceId(R.styleable.RatingView_emptySymbol, 0);
             filledSymbol = typedArray.getResourceId(R.styleable.RatingView_filledSymbol, 0);
+
+            typedArray.recycle();
         } else {
             maxRating = MIN_RATING;
             rating = MIN_RATING;
         }
 
+        // create symbols
         for (int i = 0; i < maxRating; ++i) {
             SymbolView symbolView = new SymbolView(getContext(), i);
-            int imageResId = rating > i ? filledSymbol : emptySymbol;
-            symbolView.setImageDrawable(getContext().getDrawable(imageResId));
+            int symbolResId = rating > i ? filledSymbol : emptySymbol;
+            Drawable symbolDrawable = symbolResId == 0 ? null : getContext().getDrawable(symbolResId);
+            symbolView.setImageDrawable(symbolDrawable);
             addView(symbolView);
             symbolViews.add(symbolView);
         }
@@ -68,21 +72,48 @@ public class RatingView extends LinearLayout {
 //
 //    }
 
+    public int getMaxRating() {
+        return maxRating;
+    }
+
     public int getRating() {
         return rating;
     }
 
-    // TODO
+    public int getEmptySymbol() {
+        return emptySymbol;
+    }
+
+    public int getFilledSymbol() {
+        return filledSymbol;
+    }
+
     public void setMaxRating(int maxRating) {
         if (maxRating == this.maxRating || maxRating < MIN_RATING) {
             return;
         }
 
         if (maxRating < this.maxRating) { // decrease symbol
-
+            // remove views from the end
+            for (int i = symbolViews.size() - 1; i > maxRating; --i) {
+                SymbolView symbolView = symbolViews.get(i);
+                removeView(symbolView);
+            }
+            // resize container down
+            symbolViews.subList(maxRating, symbolViews.size()).clear();
         } else { // increase symbol
-
+            // push new symbols
+            for (int i = 0; i < maxRating - this.maxRating; ++i) {
+                SymbolView symbolView = new SymbolView(getContext(), symbolViews.size());
+                Drawable emptySymbolDrawable = emptySymbol == 0 ? null : getContext().getDrawable(emptySymbol);
+                symbolView.setImageDrawable(emptySymbolDrawable);
+                addView(symbolView);
+                symbolViews.add(symbolView);
+            }
         }
+
+        this.maxRating = maxRating;
+        this.rating = Math.min(this.rating, this.maxRating); // do not exceed new max
     }
 
     public void setRating(int rating) {
@@ -91,6 +122,7 @@ public class RatingView extends LinearLayout {
         }
 
         int oldRating = this.rating;
+        // clamp
         if (rating < MIN_RATING) {
             this.rating = MIN_RATING;
         } else if (rating > maxRating) {
@@ -99,22 +131,24 @@ public class RatingView extends LinearLayout {
             this.rating = rating;
         }
 
-        if (this.rating < oldRating) { // empty the symbol
+        if (this.rating < oldRating) { // empty
             for (int i = oldRating - 1; i > this.rating - 1; --i) {
                 SymbolView symbolView = symbolViews.get(i);
 
-                symbolView.setImageDrawable(getContext().getDrawable(emptySymbol));
+                Drawable emptySymbolDrawable = emptySymbol == 0 ? null : getContext().getDrawable(emptySymbol);
+                symbolView.setImageDrawable(emptySymbolDrawable);
                 Drawable drawable = symbolView.getDrawable();
                 if (drawable instanceof Animatable) {
                     Animatable animatable = (Animatable)drawable;
                     animatable.start();
                 }
             }
-        } else { // fill the symbol
+        } else { // fill
             for (int i = oldRating; i < this.rating; ++i) {
                 SymbolView symbolView = symbolViews.get(i);
 
-                symbolView.setImageDrawable(getContext().getDrawable(filledSymbol));
+                Drawable filledSymbolDrawable = filledSymbol == 0 ? null : getContext().getDrawable(filledSymbol);
+                symbolView.setImageDrawable(filledSymbolDrawable);
                 Drawable drawable = symbolView.getDrawable();
                 if (drawable instanceof Animatable) {
                     Animatable animatable = (Animatable)drawable;
@@ -122,6 +156,33 @@ public class RatingView extends LinearLayout {
                 }
             }
         }
+    }
+
+    public void setEmptySymbol(int emptySymbol) {
+        if (emptySymbol == this.emptySymbol) {
+            return;
+        }
+
+        this.emptySymbol = emptySymbol;
+
+        for (int i = rating; i < maxRating; ++i) {
+            SymbolView symbolView = symbolViews.get(i);
+            symbolView.setImageDrawable(getContext().getDrawable(this.emptySymbol));
+        }
+    }
+
+    public void setFilledSymbol(int filledSymbol) {
+        if (filledSymbol == this.filledSymbol) {
+            return;
+        }
+
+        this.filledSymbol = filledSymbol;
+
+        for (int i = 0; i < rating; ++i) {
+            SymbolView symbolView = symbolViews.get(i);
+            symbolView.setImageDrawable(getContext().getDrawable(this.filledSymbol));
+        }
+
     }
 
     private class SymbolView extends AppCompatImageView {

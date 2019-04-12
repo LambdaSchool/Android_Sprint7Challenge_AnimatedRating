@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/constraint_layout_main">
 
     <com.example.israel.sprint4.RatingView
         android:layout_width="wrap_content"
@@ -21,7 +22,7 @@
 
     <com.example.israel.sprint4.RatingView
         android:layout_width="wrap_content"
-        android:layout_height="22dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="200dp"
         app:layout_constraintStart_toStartOf="parent"
