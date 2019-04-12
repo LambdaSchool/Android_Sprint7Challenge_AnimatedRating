@@ -75,17 +75,17 @@ public class RatingsView extends LinearLayout {
             initialStars = 0;
         }
 
-        for(int i = 0; i < maxStars; i++){
+        for(int i = 0; i <= maxStars; i++){
             final ImageView star = new ImageView(getContext());
             if(i < initialStars){
                 star.setImageDrawable(getResources().getDrawable(fillStar));
                 if(star.getDrawable() instanceof Animatable){
                     ((Animatable) star.getDrawable()).start();
                 }
-            }else{
+            }else if (i > initialStars){
                 star.setImageDrawable(getResources().getDrawable(emptyStar));
                 if(star.getDrawable() instanceof Animatable){
-                    if(firstDraw || i == initialStars - 1) {
+                    if(firstDraw || i == initialStars) {
                         ((Animatable) star.getDrawable()).start();
                     }
                 }
