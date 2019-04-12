@@ -8,16 +8,27 @@
     tools:context=".MainActivity">
 
     <com.example.israel.sprint4.RatingView
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        app:emptySymbol="@drawable/avd_star_filled_to_empty"
+        app:filledSymbol="@drawable/avd_star_empty_to_filled"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:maxRating="5"
-        app:rating="3"
-        app:emptySymbol="@drawable/avd_star_filled_to_empty"
-        app:filledSymbol="@drawable/avd_star_empty_to_filled">
+        app:rating="3" />
 
-    </com.example.israel.sprint4.RatingView>
+    <com.example.israel.sprint4.RatingView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxRating="10"
+        app:rating="7"
+        app:emptySymbol="@drawable/avd_star_filled_to_empty"
+        app:filledSymbol="@drawable/avd_star_empty_to_filled"/>
 
 </android.support.constraint.ConstraintLayout>

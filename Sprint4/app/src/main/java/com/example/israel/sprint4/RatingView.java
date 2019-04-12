@@ -41,8 +41,8 @@ public class RatingView extends LinearLayout {
                 rating = maxRating;
             }
 
-            emptySymbol = R.drawable.avd_star_filled_to_empty;//typedArray.getInteger(R.styleable.RatingView_emptySymbol, 0);
-            filledSymbol = R.drawable.avd_star_empty_to_filled;//typedArray.getInteger(R.styleable.RatingView_filledSymbol, 0);
+            emptySymbol = typedArray.getResourceId(R.styleable.RatingView_emptySymbol, 0);
+            filledSymbol = typedArray.getResourceId(R.styleable.RatingView_filledSymbol, 0);
         } else {
             maxRating = MIN_RATING;
             rating = MIN_RATING;
@@ -72,14 +72,13 @@ public class RatingView extends LinearLayout {
         return rating;
     }
 
+    // TODO
     public void setMaxRating(int maxRating) {
         if (maxRating == this.maxRating || maxRating < MIN_RATING) {
             return;
         }
 
         if (maxRating < this.maxRating) { // decrease symbol
-
-
 
         } else { // increase symbol
 
