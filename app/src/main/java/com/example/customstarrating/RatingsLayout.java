@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.widget.LinearLayout;
-
-import java.util.ArrayList;
 
 public class RatingsLayout extends LinearLayout {
 
