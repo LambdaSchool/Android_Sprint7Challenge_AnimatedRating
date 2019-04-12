@@ -2,8 +2,12 @@ package com.jakeesveld.sprint4_challenge;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 public class RatingsView extends LinearLayout {
@@ -39,6 +43,28 @@ public class RatingsView extends LinearLayout {
             fillStar = typedArray.getResourceId(R.styleable.RatingsView_fill_star, R.drawable.avd_anim_empty_fill);
 
             typedArray.recycle();
+            drawStars();
         }
+    }
+
+    public void drawStars() {
+        removeAllViews();
+
+        for(int i = 0; i < maxStars; i++){
+            final ImageView star = new ImageView(getContext());
+            if(i < initialStars){
+                star.setImageDrawable(getResources().getDrawable(fillStar));
+                if(star.getDrawable() instanceof Animatable){
+                    ((Animatable) star.getDrawable()).start();
+                }
+            }else{
+                star.setImageDrawable(getResources().getDrawable(emptyStar));
+                if(star.getDrawable() instanceof Animatable){
+                    ((Animatable) star.getDrawable()).start();
+                }
+            }
+            addView(star);
+        }
+
     }
 }
