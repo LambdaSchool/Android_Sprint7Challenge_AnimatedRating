@@ -2,6 +2,7 @@ package com.vivekvishwanath.animatedrating.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -75,9 +76,18 @@ public class AnimatedRatingBar extends LinearLayout {
         for (int i = 0; i < maxRating; i++) {
             if (i <= index) {
                 ratingSymbols.get(i).setFilled(true);
-                ratingSymbols.get(i).setImageResource(filledSymbolId);
+                if (ratingSymbols.get(i).getDrawable() instanceof AnimatedVectorDrawable) {
+                    ratingSymbols.get(i).setImageResource(emptySymbolId);
+                    ((AnimatedVectorDrawable) ratingSymbols.get(i).getDrawable()).start();
+                } else {
+                    ratingSymbols.get(i).setImageResource(filledSymbolId);
+                }
             } else {
                 ratingSymbols.get(i).setFilled(false);
+                if (ratingSymbols.get(i).getDrawable() instanceof AnimatedVectorDrawable) {
+                    ratingSymbols.get(i).setImageResource(filledSymbolId);
+                    ((AnimatedVectorDrawable) ratingSymbols.get(i).getDrawable()).start();
+                }
                 ratingSymbols.get(i).setImageResource(emptySymbolId);
             }
         }
