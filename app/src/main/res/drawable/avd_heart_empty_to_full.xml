@@ -4518,7 +4518,7 @@
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="scaleX"
-                android:duration="600"
+                android:duration="6000"
                 android:valueFrom="0"
                 android:valueTo="1"
                 android:valueType="floatType"
