@@ -45,44 +45,46 @@ public class RatingsView extends LinearLayout {
             fillStar = typedArray.getResourceId(R.styleable.RatingsView_fill_star, R.drawable.avd_anim_empty_fill);
 
             typedArray.recycle();
-            drawStars(true);
+            drawStars(true, true);
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int halfway = getWidth() / 2;
+        boolean fill = true;
         if (event.getX() < halfway) {
             initialStars -= 1;
+            fill = false;
         } else {
             initialStars += 1;
         }
-        drawStars(false);
+        drawStars(false, fill);
         return false;
     }
 
     public void setStars(int maxStars, int initialStars) {
         this.maxStars = maxStars;
         this.initialStars = initialStars;
-        drawStars(true);
+        drawStars(true, true);
     }
 
-    public void drawStars(boolean firstDraw) {
+    public void drawStars(boolean firstDraw, boolean fill) {
         removeAllViews();
         if (initialStars > maxStars) {
             initialStars = maxStars;
-        } else if (initialStars < 0) {
-            initialStars = 0;
+        } else if (initialStars < -1) {
+            initialStars = -1;
         }
 
-        for (int i = 0; i <= maxStars; i++) {
+        for (int i = 1; i <= maxStars; i++) {
             final ImageView star = new ImageView(getContext());
             if (i <= initialStars) {
                 star.setImageDrawable(getResources().getDrawable(fillStar));
-                if (star.getDrawable() instanceof Animatable) {
+                if (star.getDrawable() instanceof Animatable && fill) {
                     ((Animatable) star.getDrawable()).start();
                 }
-            } else if (i == initialStars) {
+            } else if (i == initialStars + 1 && !fill) {
                 star.setImageDrawable(getResources().getDrawable(emptyStar));
                 if (star.getDrawable() instanceof Animatable) {
                     ((Animatable) star.getDrawable()).start();
