@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <com.jakeesveld.sprint4_challenge.RatingsView
+        android:id="@+id/ratings_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:max_stars="10"
+        app:initial_stars="5"
+        app:fill_star="@drawable/avd_anim_empty_fill"
+        app:empty_star="@drawable/avd_anim_fill_empty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
