@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HeartLifeGauge">
+        <attr name="starting_health" format="integer"></attr>
+        <attr name="max_health" format="integer"></attr>
+    </declare-styleable>
+
+
+</resources>
