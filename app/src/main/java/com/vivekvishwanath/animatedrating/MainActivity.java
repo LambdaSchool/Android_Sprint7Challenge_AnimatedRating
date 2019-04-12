@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         setRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                arb.setRating(Integer.parseInt(editText.getText().toString()));
+                int rating = Integer.parseInt(editText.getText().toString());
+                if (rating >= 0 && rating <= arb.getMaxRating())
+                    arb.setRating(rating);
             }
         });
 

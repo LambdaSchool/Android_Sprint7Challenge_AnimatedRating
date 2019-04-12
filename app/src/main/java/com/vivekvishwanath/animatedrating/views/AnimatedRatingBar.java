@@ -110,4 +110,8 @@ public class AnimatedRatingBar extends LinearLayout {
         }
         return count;
     }
+
+    public int getMaxRating() {
+        return maxRating;
+    }
 }

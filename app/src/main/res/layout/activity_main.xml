@@ -22,6 +22,7 @@
 
     <EditText
         android:id="@+id/rating_entry"
+        android:backgroundTint="@android:color/white"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/set_rating_button"
         android:textColor="@android:color/white"
