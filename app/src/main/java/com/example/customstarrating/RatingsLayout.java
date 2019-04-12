@@ -1,6 +1,7 @@
 package com.example.customstarrating;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -15,25 +16,33 @@ public class RatingsLayout extends LinearLayout {
 
     public RatingsLayout(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public RatingsLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     public RatingsLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(attrs);
     }
 
     public RatingsLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+        init(attrs);
     }
 
-    private void init() {
+    private void init(AttributeSet attrs) {
+
+        if (attrs != null) {
+            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RatingsLayout);
+            starNumberTotal = typedArray.getInteger(R.styleable.RatingsLayout_max_rating, 10);
+            starRating = typedArray.getInteger(R.styleable.RatingsLayout_starting_rating, 3);
+            typedArray.recycle();
+        }
+
         for (int i = 0; i < starNumberTotal; ++i) {
             if (i < starRating) {
                 addView(new StarRating(getContext(), 1));
