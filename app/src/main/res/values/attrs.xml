@@ -4,6 +4,9 @@
     <declare-styleable name="AnimatedRating">
         <attr name="max_rating" format="integer"/>
         <attr name="start_rating" format="integer"/>
-        <attr name="is_filled" format="boolean"/>
+        <attr name="symbol_filling" format="reference"/>
+        <attr name="symbol_filled" format="reference"/>
+        <attr name="symbol_emptying" format="reference"/>
+        <attr name="symbol_empty" format="reference"/>
     </declare-styleable>
 </resources>

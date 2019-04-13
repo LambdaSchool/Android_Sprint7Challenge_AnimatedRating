@@ -37,17 +37,18 @@ public class AnimatedRating extends LinearLayout {
         init(attrs);
     }
 
-    int maxRating, startRating, currentRating;
-    boolean isFilled;
+    int maxRating, startRating, currentRating, symbolFilling, symbolFilled, symbolEmptying, symbolEmpty;
     ViewGroup inflatedViewGroup;
 
     protected void init(AttributeSet attrs) {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.AnimatedRating);
-        maxRating = typedArray.getInt(R.styleable.AnimatedRating_max_rating, 10);
-        startRating = typedArray.getInt(R.styleable.AnimatedRating_start_rating, 5);
-        isFilled = typedArray.getBoolean(R.styleable.AnimatedRating_is_filled, false);
+        maxRating = typedArray.getInt(R.styleable.AnimatedRating_max_rating, 7);
+        startRating = typedArray.getInt(R.styleable.AnimatedRating_start_rating, 3);
+        symbolFilling = typedArray.getResourceId(R.styleable.AnimatedRating_symbol_filling, R.drawable.avd_line_star_fill);
+        symbolFilled = typedArray.getResourceId(R.styleable.AnimatedRating_symbol_filled, R.drawable.avd_star_filled);
+        symbolEmptying = typedArray.getResourceId(R.styleable.AnimatedRating_symbol_emptying, R.drawable.avd_line_star_empty);
+        symbolEmpty = typedArray.getResourceId(R.styleable.AnimatedRating_symbol_empty, R.drawable.avd_star_empty);
         setCurrentRating(startRating - 1);
-
         inflatedViewGroup = (ViewGroup) inflate(getContext(), R.layout.animated_rating_group_layout, null);
         for (int i = 0; i < maxRating; ++i) {
             ImageView imageView = new ImageView(getContext(), attrs);
@@ -56,9 +57,9 @@ public class AnimatedRating extends LinearLayout {
             layoutParams.height = 100;
             imageView.setLayoutParams(layoutParams);
             if (i < startRating)
-                imageView.setImageDrawable(getResources().getDrawable(R.drawable.avd_star_filled));
+                imageView.setImageDrawable(getResources().getDrawable(symbolFilled));
             else
-                imageView.setImageDrawable(getResources().getDrawable(R.drawable.avd_star_empty));
+                imageView.setImageDrawable(getResources().getDrawable(symbolEmpty));
 
             imageView.setTag(i);
             imageView.setOnClickListener(onClickListener);
@@ -83,19 +84,19 @@ public class AnimatedRating extends LinearLayout {
 
             int ratingClicked = (int) v.getTag();
 
-            Drawable drawable = getResources().getDrawable(R.drawable.avd_star_filled);
+            Drawable drawable = getResources().getDrawable(symbolFilled);
             AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) drawable;
 
             if (ratingClicked > getCurrentRating()) { // Increase rating
                 for (int i = 0; i < maxRating; ++i) {
                     if (i < ratingClicked && i <= getCurrentRating())
-                        drawable = v.getResources().getDrawable(R.drawable.avd_star_filled);
+                        drawable = v.getResources().getDrawable(symbolFilled);
                     else if (i < ratingClicked)
-                        drawable = v.getResources().getDrawable(R.drawable.avd_line_star_fill);
+                        drawable = v.getResources().getDrawable(symbolFilling);
                     else if (i == ratingClicked)
-                        drawable = v.getResources().getDrawable(R.drawable.avd_line_star_fill);
+                        drawable = v.getResources().getDrawable(symbolFilling);
                     else
-                        drawable = v.getResources().getDrawable(R.drawable.avd_star_empty);
+                        drawable = v.getResources().getDrawable(symbolEmpty);
 
                     animatedVectorDrawable = (AnimatedVectorDrawable) drawable;
                     ((ImageView) inflatedViewGroup.getChildAt(i)).setImageDrawable(drawable);
@@ -104,13 +105,13 @@ public class AnimatedRating extends LinearLayout {
             } else if (ratingClicked < getCurrentRating()) { // Decrease rating
                 for (int i = 0; i < maxRating; ++i) {
                     if (i < ratingClicked)
-                        drawable = v.getResources().getDrawable(R.drawable.avd_star_filled);
+                        drawable = v.getResources().getDrawable(symbolFilled);
                     else if (i == ratingClicked)
-                        drawable = v.getResources().getDrawable(R.drawable.avd_star_filled);
-                    else if (i > ratingClicked && i >getCurrentRating())
-                        drawable = v.getResources().getDrawable(R.drawable.avd_star_empty);
+                        drawable = v.getResources().getDrawable(symbolFilled);
+                    else if (i > ratingClicked && i > getCurrentRating())
+                        drawable = v.getResources().getDrawable(symbolEmpty);
                     else
-                        drawable = v.getResources().getDrawable(R.drawable.avd_line_star_empty);
+                        drawable = v.getResources().getDrawable(symbolEmptying);
 
                     animatedVectorDrawable = (AnimatedVectorDrawable) drawable;
                     ((ImageView) inflatedViewGroup.getChildAt(i)).setImageDrawable(drawable);
