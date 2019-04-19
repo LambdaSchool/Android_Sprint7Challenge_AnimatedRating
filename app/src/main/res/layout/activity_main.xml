@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/input_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="10" />
+
+    <Button
+        android:id="@+id/button_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rate" />
+    <TextView
+        android:id="@+id/text_result"
+        android:text="rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <com.example.android_sprint7challenge_animatedrating.SliderView
         android:id="@+id/slider_rate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="771dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="97dp" />
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

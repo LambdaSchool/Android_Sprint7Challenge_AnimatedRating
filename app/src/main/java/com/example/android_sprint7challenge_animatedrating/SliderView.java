@@ -35,6 +35,7 @@ public class SliderView extends View {
     int iDotRaidus=50;// Radius of a dot
     int iWidthCanvas ;
     int iHeightCanvas;
+    int iRate=0;
     Context context;
 
     public  SliderView (Context context, AttributeSet attrs, int defStyle) {
@@ -130,6 +131,17 @@ public class SliderView extends View {
     }
 
 
+    public void setRating(int iRating){
+        iRate=iRating;
+        invalidate();
+    }
+    public int getRating(){
+        return iRate;
+    }
+    public String getStringRating(){
+        return Integer.toString(iRate);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         // 格子を描画する
@@ -139,9 +151,9 @@ public class SliderView extends View {
    //     canvas.drawCircle(fX, fY, iDotRaidus, paint);    // (6)
         int iSizeText=50;
         paint1.setTextSize(iSizeText);
-        canvas.drawText("x="+Float.toString(fX),100,100,paint1);
-        canvas.drawText("y="+Float.toString(fY),100,110+iSizeText,paint1);
-       canvas.drawText("rate="+Double.toString(getPercent((int)fX,90,1000)),100,130+iSizeText*3,paint1);
+  //      canvas.drawText("x="+Float.toString(fX),100,100,paint1);
+   //     canvas.drawText("y="+Float.toString(fY),100,110+iSizeText,paint1);
+       canvas.drawText("rate="+Double.toString(getScore((int)fX,90,1000)),100,130+iSizeText*3,paint1);
         paint1.setTextSize(100);
         int iStart=10, iEnd=iWidthCanvas-10,iPitch=(iEnd-iStart)/10,iY=400;
         for(int i=0;i<=10;i++){
@@ -153,9 +165,9 @@ public class SliderView extends View {
 
         }
 
-        iY=800;
+        iY=200;
         for(int i=0;i<=10;i++){
-            if(i<=getScore((int)fX,iStart,iEnd)){
+            if(i<=iRate){
                 canvas.drawText("★",iStart+i*iPitch,iY,paint1);
             }else{
                 canvas.drawText("☆",iStart+i*iPitch,iY,paint1);
