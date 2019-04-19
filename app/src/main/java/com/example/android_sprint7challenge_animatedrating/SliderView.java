@@ -9,11 +9,18 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 
 
 /**
@@ -21,27 +28,24 @@ import android.view.WindowManager;
  * @author marunomaruno
  * @see Graphics04Activity
  */
-public class SliderView extends View {
+public class SliderView extends View implements Animatable {
 
     private Paint paint, paint1;
     private float fX;    // 図形を描画する X 座標    // (1)
     private float fY;    // 図形を描画する Y 座標    // (2)
-    private double dTheta;
-    private double dRotation=-60; //Degree of Dial starting point from horizontal line
-    int iCenterX=500;
-    int iCenterY=500;
-    int iDialRadius;
-    int iDotMovingRadius;// Radius of Dial
-    int iDotRaidus=50;// Radius of a dot
-    int iWidthCanvas ;
-    int iHeightCanvas;
-    int iStartingRating=0;
-    int iRate=iStartingRating;
-    Context context;
-    int iMaxRating=10;
-
-    String strEmpty="☆";
-    String strFilled="★";
+    private int iWidthCanvas ;
+    private int iHeightCanvas;
+    private int iStartingRating=0;
+    private int iRate=iStartingRating;
+    private int iSizeText=100;
+    private int iMaxRating=10;
+    private int iStartingPointX;
+    private int iStartingPointY;
+    private int iEndPointX;
+    private int iEndPointY;
+    private int iGapText=10;
+    private String strEmpty="☆";
+    private String strFilled="★";
 
     public  SliderView (Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -66,24 +70,11 @@ public class SliderView extends View {
         iWidthCanvas = display.getWidth();
         iHeightCanvas = display.getHeight();
 
-        iCenterX=iWidthCanvas/2;
-        iCenterY=iHeightCanvas/2;
-        paint1 = new Paint();
-        paint1.setAntiAlias(true);
-        paint1.setColor(Color.BLACK);    // (4)
-        paint1.setStyle(Style.FILL);    // (5)
-
-
         // ペイントオブジェクトを設定する
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.RED);    // (4)
         paint.setStyle(Style.FILL);    // (5)
-
-        // 丸を描画する初期値を設定する
-        fX = iCenterX;
-        fY = iCenterY-iDotMovingRadius;
-
 
     }
     @SuppressLint("ResourceType")
@@ -94,43 +85,30 @@ public class SliderView extends View {
         Display display = manager.getDefaultDisplay();
         iWidthCanvas = display.getWidth();
         iHeightCanvas = display.getHeight();
-        iCenterX=iWidthCanvas/2;
-        iCenterY=iHeightCanvas/2;
 
         if(attrs!=null){
             TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.SliderlView);
-            paint1 = new Paint();
-            paint1.setAntiAlias(true);
-       //     paint1.setColor(typedArray.getColor(R.styleable.SliderlView_dial_color,Color.DKGRAY));    // (4)
-            paint1.setStyle(Style.FILL);
-     //       iDotMovingRadius=typedArray.getInt(R.styleable.SliderlView_dial_color,400);
 
+            iStartingRating=typedArray.getInteger(R.styleable.SliderlView_iStartingRating,0);
+            iSizeText=typedArray.getInteger(R.styleable.SliderlView_iSizeText,100);
+            iMaxRating=typedArray.getInteger(R.styleable.SliderlView_iMaxRating,10);
+            iGapText=typedArray.getInteger(R.styleable.SliderlView_iGapText,10);
+//            strEmpty=typedArray.getString(R.styleable.SliderlView_strFilled,"☆");
+         //   strFilled=typedArray.getString(R.styleable.SliderlView_strFilled,"★");
             // ペイントオブジェクトを設定する
             paint = new Paint();
             paint.setAntiAlias(true);
             paint.setColor(Color.RED);    // (4)
             paint.setStyle(Style.FILL);    // (5)
-
-            // 丸を描画する初期値を設定する
-            fX = iCenterX;
-            fY = iCenterY-iDotMovingRadius;
+            typedArray.recycle();
 
         }else{
-            paint1 = new Paint();
-            paint1.setAntiAlias(true);
-            paint1.setColor(Color.BLACK);    // (4)
-            paint1.setStyle(Style.FILL);    // (5)
-
 
             // ペイントオブジェクトを設定する
             paint = new Paint();
             paint.setAntiAlias(true);
             paint.setColor(Color.RED);    // (4)
             paint.setStyle(Style.FILL);    // (5)
-
-            // 丸を描画する初期値を設定する
-            fX = iCenterX;
-            fY = iCenterY-iDotMovingRadius;
 
         }
     }
@@ -164,76 +142,35 @@ public class SliderView extends View {
     public void setStrEmpty(String strEmpty){
         this.strEmpty=strEmpty;
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onDraw(Canvas canvas) {
         // 格子を描画する
         drawGrid(canvas, 50);
-  //      canvas.drawCircle(iCenterX, iCenterY, iDialRadius, paint1);
-        // 円を描画する
-   //     canvas.drawCircle(fX, fY, iDotRaidus, paint);    // (6)
-        int iSizeText=50;
-        paint1.setTextSize(iSizeText);
-  //      canvas.drawText("x="+Float.toString(fX),100,100,paint1);
-   //     canvas.drawText("y="+Float.toString(fY),100,110+iSizeText,paint1);
-       canvas.drawText("rate="+Double.toString(getScore((int)fX,90,1000)),100,130+iSizeText*3,paint1);
-        paint1.setTextSize(100);
-        int iStart=10, iEnd=iWidthCanvas-10,iPitch=(iEnd-iStart)/iMaxRating,iY=400;
-        for(int i=0;i<=iMaxRating;i++){
-            if(i<=getScore((int)fX,iStart,iEnd)){
-                canvas.drawText(strFilled,iStart+i*iPitch,iY,paint1);
-            }else{
-                canvas.drawText(strEmpty,iStart+i*iPitch,iY,paint1);
-            }
 
-        }
+        paint.setTextSize(iSizeText);
+        int iStart=10, iEnd=iWidthCanvas-10,iPitch=(iEnd-iStart)/iMaxRating,iY=400;
 
         iY=200;
         for(int i=0;i<=iMaxRating;i++){
-            if(i<=iRate){
-                canvas.drawText(strFilled,iStart+i*iPitch,iY,paint1);
+            if(i<iRate){
+                canvas.drawText(strFilled,iStart+i*iPitch,iY,paint);
             }else{
-                canvas.drawText(strEmpty,iStart+i*iPitch,iY,paint1);
-            }
-
-        }
-
-
-    }
-
-    public double getTheta(double dCos,double dSin,double dRotation){
-        dRotation=-Math.PI*dRotation/180;
-
-        double dCosRotation=Math.cos(dRotation)
-                ,dSinRotation=Math.sin(dRotation),
-
-                dCosNew=dCosRotation*dCos-dSin*dSinRotation,
-                dSinNew=dSinRotation*dCos+dCosRotation*dSin;
-        double dThetac=Math.acos(dCosNew);
-        double dThetas=Math.asin(dSinNew);
-        if(dCosNew>=0){
-            if(dSinNew>=0){
-                dTheta=dThetac;
-            }else{
-                dTheta=2*Math.PI-dThetac;
-
-            }
-
-        }else{
-            if(dSinNew>=0){
-                dTheta=dThetac;
-            }else{
-                dTheta=2*Math.PI-dThetac;
+                canvas.drawText(strEmpty,iStart+i*iPitch,iY,paint);
             }
         }
-        return dTheta;
+        canvas.drawText("Rating="+Double.toString(getScore((int)fX,90,1000)),100,130+iSizeText*4,paint);
+        iY=400;
+        for(int i=0;i<iMaxRating;i++){
+            if(i<=getScore((int)fX,iStart,iEnd)){
+                canvas.drawText(strFilled,iStart+i*iPitch,iY,paint);
+            }else{
+                canvas.drawText(strEmpty,iStart+i*iPitch,iY,paint);
+            }
+        }
+
     }
 
-
-
-    public double getDegree(){
-
-        return Math.toDegrees(dTheta);
-    }
     public int getPercent(int iLocation, int iLeftLimit, int iRightLimit) {
         int iResult = 100*iLocation/(iRightLimit-iLeftLimit);
         return iResult;
@@ -241,8 +178,9 @@ public class SliderView extends View {
 
     public int getScore(int iLocation, int iLeftLimit, int iRightLimit) {
         int iResult = 100*iLocation/(iRightLimit-iLeftLimit);
-        return (int)(iResult/10);
+        return (int)(iResult/iMaxRating);
     }
+
     public String getValues(){
         return Float.toString(fX)+","+Float.toString(fY);
     }
@@ -297,5 +235,20 @@ public class SliderView extends View {
             canvas.drawText(Integer.toString(i), 0, i, paint);
             canvas.drawLine(0, i, iWidthCanvas, i, paint);
         }
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 }

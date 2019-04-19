@@ -62,14 +62,24 @@
             android:layout_height="wrap_content"
             android:text="attribute" />
     </LinearLayout>
+    <ImageView
+    android:id="@+id/image"
 
-
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
     <com.example.android_sprint7challenge_animatedrating.SliderView
         android:id="@+id/slider_rate"
         android:layout_width="match_parent"
         android:layout_height="771dp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="97dp" />
+        app:iStartingRating="0"
+        app:iSizeText="100"
+        app:iMaxRating="10"
+        app:iGapText="10"
+       tools:layout_editor_absoluteY="97dp" />
+
+
+
 
 
 </LinearLayout>

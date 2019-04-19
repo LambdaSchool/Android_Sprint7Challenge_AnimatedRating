@@ -1,14 +1,22 @@
 package com.example.android_sprint7challenge_animatedrating;
 
+import android.content.Context;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements Animatable {
+    Context context;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +53,29 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+ //       ImageView buttonView=findViewById(R.id.image);
+  //      Drawable drawable=context.getDrawable(R.drawable.ic_launcher_foreground);
+  //      buttonView.setImageDrawable(drawable);
+  //      final Drawable buttonDrawable = buttonView.getDrawable();
+   //     if (buttonDrawable instanceof AnimatedVectorDrawable) {
+   //         ((AnimatedVectorDrawable) buttonDrawable).start();
+  //      }
 
 
+    }
 
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
     }
 }
