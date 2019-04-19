@@ -35,8 +35,13 @@ public class SliderView extends View {
     int iDotRaidus=50;// Radius of a dot
     int iWidthCanvas ;
     int iHeightCanvas;
-    int iRate=0;
+    int iStartingRating=0;
+    int iRate=iStartingRating;
     Context context;
+    int iMaxRating=10;
+
+    String strEmpty="☆";
+    String strFilled="★";
 
     public  SliderView (Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -137,11 +142,28 @@ public class SliderView extends View {
     }
     public int getRating(){
         return iRate;
+
     }
     public String getStringRating(){
         return Integer.toString(iRate);
+
     }
 
+    public void setMaxRating(int iMaxRating){
+        this.iMaxRating=iMaxRating;
+    }
+
+    public void setStartingRating(int iRate){
+        this.iStartingRating=iRate;
+    }
+
+    public void setStrFilled(String strFilled){
+        this.strFilled=strFilled;
+    }
+
+    public void setStrEmpty(String strEmpty){
+        this.strEmpty=strEmpty;
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         // 格子を描画する
@@ -155,22 +177,22 @@ public class SliderView extends View {
    //     canvas.drawText("y="+Float.toString(fY),100,110+iSizeText,paint1);
        canvas.drawText("rate="+Double.toString(getScore((int)fX,90,1000)),100,130+iSizeText*3,paint1);
         paint1.setTextSize(100);
-        int iStart=10, iEnd=iWidthCanvas-10,iPitch=(iEnd-iStart)/10,iY=400;
-        for(int i=0;i<=10;i++){
+        int iStart=10, iEnd=iWidthCanvas-10,iPitch=(iEnd-iStart)/iMaxRating,iY=400;
+        for(int i=0;i<=iMaxRating;i++){
             if(i<=getScore((int)fX,iStart,iEnd)){
-                canvas.drawText("★",iStart+i*iPitch,iY,paint1);
+                canvas.drawText(strFilled,iStart+i*iPitch,iY,paint1);
             }else{
-                canvas.drawText("☆",iStart+i*iPitch,iY,paint1);
+                canvas.drawText(strEmpty,iStart+i*iPitch,iY,paint1);
             }
 
         }
 
         iY=200;
-        for(int i=0;i<=10;i++){
+        for(int i=0;i<=iMaxRating;i++){
             if(i<=iRate){
-                canvas.drawText("★",iStart+i*iPitch,iY,paint1);
+                canvas.drawText(strFilled,iStart+i*iPitch,iY,paint1);
             }else{
-                canvas.drawText("☆",iStart+i*iPitch,iY,paint1);
+                canvas.drawText(strEmpty,iStart+i*iPitch,iY,paint1);
             }
 
         }

@@ -6,23 +6,63 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/input_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="10" />
 
-    <EditText
-        android:id="@+id/input_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="10" />
+        <Button
+            android:id="@+id/button_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="rate" />
+        <TextView
+            android:id="@+id/text_result"
+            android:text="rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/input_max"
+            android:text="10"
+            android:hint="max rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/input_starting"
+            android:text="0"
+            android:hint="max rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/input_empty"
+            android:text="☆"
+            android:hint=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/input_filled"
+            android:text="★"
+            android:hint=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/button_attribute"
 
-    <Button
-        android:id="@+id/button_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="rate" />
-    <TextView
-        android:id="@+id/text_result"
-        android:text="rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="attribute" />
+    </LinearLayout>
+
 
     <com.example.android_sprint7challenge_animatedrating.SliderView
         android:id="@+id/slider_rate"
