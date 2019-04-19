@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements Animatable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context=getApplicationContext();
         setContentView(R.layout.activity_main);
         final SliderView sl=findViewById(R.id.slider_rate);
         final EditText et=findViewById(R.id.input_rating);
@@ -53,13 +54,6 @@ public class MainActivity extends AppCompatActivity implements Animatable {
 
             }
         });
- //       ImageView buttonView=findViewById(R.id.image);
-  //      Drawable drawable=context.getDrawable(R.drawable.ic_launcher_foreground);
-  //      buttonView.setImageDrawable(drawable);
-  //      final Drawable buttonDrawable = buttonView.getDrawable();
-   //     if (buttonDrawable instanceof AnimatedVectorDrawable) {
-   //         ((AnimatedVectorDrawable) buttonDrawable).start();
-  //      }
 
 
     }

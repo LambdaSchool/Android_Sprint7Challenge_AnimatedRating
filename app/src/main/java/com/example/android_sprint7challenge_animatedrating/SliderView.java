@@ -4,16 +4,21 @@ package com.example.android_sprint7challenge_animatedrating;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -46,15 +51,18 @@ public class SliderView extends View implements Animatable {
     private int iGapText=10;
     private String strEmpty="☆";
     private String strFilled="★";
+    private int iColorSymbol=Color.BLACK;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public  SliderView (Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initialize();
+        initialize(attrs);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public  SliderView (Context context, AttributeSet attrs) {
         super(context, attrs);
-        initialize();
+        initialize(attrs);
     }
 
     public  SliderView (Context context) {
@@ -77,6 +85,7 @@ public class SliderView extends View implements Animatable {
         paint.setStyle(Style.FILL);    // (5)
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceType")
     private void initialize(AttributeSet attrs) {
         Context context=getContext();
@@ -111,6 +120,9 @@ public class SliderView extends View implements Animatable {
             paint.setStyle(Style.FILL);    // (5)
 
         }
+
+
+
     }
 
 
@@ -169,6 +181,24 @@ public class SliderView extends View implements Animatable {
             }
         }
 
+        iY=600;
+        Drawable d;
+
+        for(int i=0;i<=iMaxRating;i++){
+            if(i<getScore((int)fX,iStart,iEnd)){
+                d= ContextCompat.getDrawable(getContext(), R.drawable.vector_star);
+                paint.setColor(Color.BLACK);
+
+            }else{
+                d= ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground);
+
+                paint.setColor(Color.GREEN);
+
+            }
+            d.setBounds(iStart+i*iPitch,iY,iStart+i*iPitch+100,iY+100);
+            d.draw(canvas);
+            invalidate();
+        }
     }
 
     public int getPercent(int iLocation, int iLeftLimit, int iRightLimit) {

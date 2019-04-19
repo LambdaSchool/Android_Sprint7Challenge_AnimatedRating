@@ -39,7 +39,7 @@
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/input_starting"
-            android:text="0"
+            android:text="1"
             android:hint="max rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -63,16 +63,18 @@
             android:text="attribute" />
     </LinearLayout>
     <ImageView
-    android:id="@+id/image"
+    android:id="@+id/image_view"
 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
+
+
     <com.example.android_sprint7challenge_animatedrating.SliderView
         android:id="@+id/slider_rate"
         android:layout_width="match_parent"
         android:layout_height="771dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:iStartingRating="0"
+        app:iStartingRating="1"
         app:iSizeText="100"
         app:iMaxRating="10"
         app:iGapText="10"
