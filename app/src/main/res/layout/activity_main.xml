@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!--S04M04-5 add our view to the layout-->
+    <!--S04M04-7 utilize the attributes to pass the values in-->
+    <com.lambdaschool.linededittext.views.LinedEditText
+        app:line_color="@android:color/holo_blue_light"
+        app:line_offset="20"
+        app:line_thickness="5"
+
+        android:id="@+id/edit_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:lineSpacingMultiplier="2"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada elit sed dolor lobortis lobortis. Suspendisse potenti. Donec efficitur ornare leo, vitae placerat lorem convallis ac. Fusce prets tortor leo ac mauris. Pellentesque nec pharetra dolor. Nulla blandit tristique sem ultricies consequat. Quisque ut sem pellentesque, vehicula augue sed, malesuada libero."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.lambdaschool.linededittext.views.LinedEditText
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</android.support.constraint.ConstraintLayout>
