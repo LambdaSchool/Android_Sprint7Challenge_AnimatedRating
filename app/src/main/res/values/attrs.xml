@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SliderlView">
+    <declare-styleable name="SymbolSliderlView">
         <attr name="iWidthCanvas" format="integer" />
         <attr name="iHeightCanvas" format="integer" />
         <attr name="iStartingRating" format="integer" />

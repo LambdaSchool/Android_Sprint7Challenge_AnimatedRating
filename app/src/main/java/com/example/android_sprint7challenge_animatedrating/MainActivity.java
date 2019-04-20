@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements Animatable {
         super.onCreate(savedInstanceState);
         context=getApplicationContext();
         setContentView(R.layout.activity_main);
-        final SliderView sl=findViewById(R.id.slider_rate);
+        final SymbolSliderView sl=findViewById(R.id.slider_rate);
         final EditText et=findViewById(R.id.input_rating);
         Button bt=findViewById(R.id.button_rate);
         bt.setOnClickListener(new View.OnClickListener() {

@@ -40,21 +40,24 @@
         <EditText
             android:id="@+id/input_starting"
             android:text="1"
-            android:hint="max rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/input_empty"
-            android:text="☆"
-            android:hint=""
+            android:hint="Initial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/input_filled"
+            android:textSize="30dp"
             android:text="★"
-            android:hint=""
+            android:hint="L"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/input_empty"
+            android:textSize="30dp"
+            android:text="☆"
+            android:hint="R"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/button_attribute"
 
@@ -69,7 +72,7 @@
     android:layout_height="wrap_content" />
 
 
-    <com.example.android_sprint7challenge_animatedrating.SliderView
+    <com.example.android_sprint7challenge_animatedrating.SymbolSliderView
         android:id="@+id/slider_rate"
         android:layout_width="match_parent"
         android:layout_height="771dp"
