@@ -186,7 +186,7 @@ public class SymbolSliderView extends View implements Animatable {
                 getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
                 iMaxRating);
         drawCommentOnCanvas("Animated version by inputing number",8,iPitch,canvas);
-        drawSymbol(canvas,R.drawable.star_fade_out,R.drawable.star_fade_out,
+        drawSymbol(canvas,R.drawable.star_new,R.drawable.star_fade_out,
                 R.drawable.ic_star_border_black_24dp,
                 iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*9,
                 iRate,
@@ -286,6 +286,7 @@ public class SymbolSliderView extends View implements Animatable {
                     } else {
                         animationDrawable.start();
                     }
+
                 } if(drawable instanceof AnimatedVectorDrawable){
                     final AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) drawable;
 
@@ -294,6 +295,9 @@ public class SymbolSliderView extends View implements Animatable {
                     } else {
                         animationDrawable.start();
                     }
+
+
+
                 }
 
             }
@@ -314,7 +318,7 @@ public class SymbolSliderView extends View implements Animatable {
  //5           canvas.restore();
 
             ViewCompat.postInvalidateOnAnimation(this);
-            drawable.draw(canvas);
+      //      drawable.draw(canvas);
             iRateBefore=iRating;
             invalidate();
 
