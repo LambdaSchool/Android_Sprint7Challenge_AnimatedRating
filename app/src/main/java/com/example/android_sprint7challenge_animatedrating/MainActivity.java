@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity implements Animatable {
     Context context;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -24,11 +26,21 @@ public class MainActivity extends AppCompatActivity implements Animatable {
         setContentView(R.layout.activity_main);
         final SymbolSliderView sl=findViewById(R.id.slider_rate);
         final EditText et=findViewById(R.id.input_rating);
+        final DecimalFormat df=new DecimalFormat("##");
+        df.setDecimalSeparatorAlwaysShown(true);
+
         Button bt=findViewById(R.id.button_rate);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sl.setRating(Integer.parseInt( et.getText().toString()));
+                int i=1;
+                try{
+                    i=Integer.parseInt( et.getText().toString());
+                }catch(Exception e){
+                    i=1;
+                }
+
+                sl.setRating(i);
                 TextView tv=findViewById(R.id.text_result);
                 tv.setText(sl.getStringRating());
                 tv.invalidate();

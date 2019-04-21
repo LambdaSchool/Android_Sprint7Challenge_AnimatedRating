@@ -13,15 +13,22 @@ import android.graphics.drawable.AnimatedImageDrawable;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.opengl.EGL14;
+import android.opengl.EGLDisplay;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+
+import javax.microedition.khronos.egl.EGLSurface;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Draw symbol。
@@ -164,17 +171,23 @@ public class SymbolSliderView extends View implements Animatable {
                 iStartingPointY+iPitch*3,getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
                 iMaxRating);
         drawCommentOnCanvas("Simple pictures version",4,iPitch,canvas);
-        drawSymbol(canvas,R.drawable.heart,R.drawable.starwhite,
+        drawSymbol(canvas,R.drawable.ic_star_black_24dp,R.drawable.ic_star_border_black_24dp,
                 iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*5,
                 getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
                 iMaxRating);
         drawCommentOnCanvas("Animated version",6,iPitch,canvas);
-        drawSymbol(canvas,R.drawable.heart,R.drawable.heartfill,
-                R.drawable.ic_launcher_foreground,
+        drawSymbol(canvas,R.drawable.star_fade_out,R.drawable.star_fade_in,
+                R.drawable.ic_star_border_black_24dp,
                 iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*7,
                 getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
                 iMaxRating);
-        drawCommentOnCanvas("Rating="+Integer.toString(getRatingByMouseLocation((int)fX,iStartingPointX,iEnd)),8,iPitch,canvas);
+        drawCommentOnCanvas("Animated version by inputing number",8,iPitch,canvas);
+        drawSymbol(canvas,R.drawable.star_fade_out,R.drawable.star_fade_out,
+                R.drawable.ic_star_border_black_24dp,
+                iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*9,
+                iRate,
+                iMaxRating);
+        drawCommentOnCanvas("Rating="+Integer.toString(getRatingByMouseLocation((int)fX,iStartingPointX,iEnd)),10,iPitch,canvas);
     }
   //Debug purpose
     void drawCommentOnCanvas(String strComment,int iRow,int iPitch,Canvas canvas){
@@ -188,10 +201,10 @@ public class SymbolSliderView extends View implements Animatable {
                            int iStart, int iEnd, int iPitch, int iY,
                             int iRating,int iMaxRating){
         paint.setColor(iColorSymbol);
-        paint.setTextSize(iPitch);
+        paint.setTextSize(iPitch-iGapText);
         for(int i=0;i<iMaxRating;i++){
             if(i<iRating){
-                canvas.drawText(strSymbolLeft,iStart+i*iPitch,iY,paint);
+                canvas.drawText(strSymbolLeft,iStart+iGapText+i*iPitch,iY,paint);
             }else{
                 canvas.drawText(strSymbolRight,iStart+i*iPitch,iY,paint);
             }
@@ -212,34 +225,6 @@ public class SymbolSliderView extends View implements Animatable {
                 drawable= ContextCompat.getDrawable(getContext(),iSymbolRight);
                 paint.setColor(Color.GREEN);
             }
-            if (drawable instanceof AnimatedImageDrawable) {
-
-                final AnimatedImageDrawable animatedImageDrawable = (AnimatedImageDrawable) drawable;
-
-                if (animatedImageDrawable.isRunning()) {
-                    animatedImageDrawable.stop();
-                } else {
-                    animatedImageDrawable.start();
-                }
-
-            } else if (drawable instanceof AnimationDrawable) {
-
-                final AnimationDrawable animationDrawable = (AnimationDrawable) drawable;
-
-                if (animationDrawable.isRunning()) {
-                    animationDrawable.stop();
-                } else {
-                    animationDrawable.start();
-                }
-            } if(drawable instanceof AnimatedVectorDrawable){
-                final AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) drawable;
-
-                if (animationDrawable.isRunning()) {
-                    animationDrawable.stop();
-                } else {
-                    animationDrawable.start();
-                }
-            }
             drawable.setBounds(iStart+i*iPitch,iY-iPitch,iStart+i*iPitch+iPitch,iY);
             iRateBefore=iRating;
             drawable.draw(canvas);
@@ -257,44 +242,51 @@ public class SymbolSliderView extends View implements Animatable {
         for(int i=0;i<iMaxRating;i++){
             if(i<iRating){
                 paint.setColor(Color.BLACK);
-                if(iRateBefore<iRating){
+
                     drawable= ContextCompat.getDrawable(getContext(),iSymbolLeftToRight);
 
-                }else{
-                    drawable= ContextCompat.getDrawable(getContext(),iSymbolRightToLeft);
 
-                }
             }else{
-                drawable= ContextCompat.getDrawable(getContext(),iSymbolRight);
+
+                if(iRateBefore<iRating) {
+                    drawable = ContextCompat.getDrawable(getContext(), iSymbolRightToLeft);
+                }else{
+                    drawable= ContextCompat.getDrawable(getContext(),iSymbolRight);
+                }
+
+
                 paint.setColor(Color.GREEN);
             }
-            if (drawable instanceof AnimatedImageDrawable) {
+            if(Build.VERSION.SDK_INT>27){
+                if (drawable instanceof AnimatedImageDrawable) {
 
-                final AnimatedImageDrawable animatedImageDrawable = (AnimatedImageDrawable) drawable;
+                    final AnimatedImageDrawable animatedImageDrawable = (AnimatedImageDrawable) drawable;
 
-                if (animatedImageDrawable.isRunning()) {
-                    animatedImageDrawable.stop();
-                } else {
-                    animatedImageDrawable.start();
+                    if (animatedImageDrawable.isRunning()) {
+                        animatedImageDrawable.stop();
+                    } else {
+                        animatedImageDrawable.start();
+                    }
+
+                } else if (drawable instanceof AnimationDrawable) {
+
+                    final AnimationDrawable animationDrawable = (AnimationDrawable) drawable;
+
+                    if (animationDrawable.isRunning()) {
+                        animationDrawable.stop();
+                    } else {
+                        animationDrawable.start();
+                    }
+                } if(drawable instanceof AnimatedVectorDrawable){
+                    final AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) drawable;
+
+                    if (animationDrawable.isRunning()) {
+                        animationDrawable.stop();
+                    } else {
+                        animationDrawable.start();
+                    }
                 }
 
-            } else if (drawable instanceof AnimationDrawable) {
-
-                final AnimationDrawable animationDrawable = (AnimationDrawable) drawable;
-
-                if (animationDrawable.isRunning()) {
-                    animationDrawable.stop();
-                } else {
-                    animationDrawable.start();
-                }
-            } if(drawable instanceof AnimatedVectorDrawable){
-                final AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) drawable;
-
-                if (animationDrawable.isRunning()) {
-                    animationDrawable.stop();
-                } else {
-                    animationDrawable.start();
-                }
             }
 
             canvas.save();
@@ -313,13 +305,14 @@ public class SymbolSliderView extends View implements Animatable {
             canvas.restore();
 
             ViewCompat.postInvalidateOnAnimation(this);
-        //    drawable.draw(canvas);
+            drawable.draw(canvas);
             iRateBefore=iRating;
             invalidate();
         }
     }
 
 
+    
     public int getRatingByMouseLocation(int iLocation, int iLeftLimit, int iRightLimit) {
         int iResult = iMaxRating*iLocation/(iRightLimit-iLeftLimit);
         return iResult;
@@ -370,7 +363,7 @@ public class SymbolSliderView extends View implements Animatable {
 
     @Override
     public void start() {
-
+        invalidate();
     }
 
     @Override
