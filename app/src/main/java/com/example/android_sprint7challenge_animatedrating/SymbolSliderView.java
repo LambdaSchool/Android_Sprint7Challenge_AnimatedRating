@@ -16,9 +16,11 @@ import android.graphics.drawable.Drawable;
 import android.opengl.EGL14;
 import android.opengl.EGLDisplay;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
@@ -26,6 +28,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLSurface;
 
 import static android.content.ContentValues.TAG;
@@ -54,6 +57,7 @@ public class SymbolSliderView extends View implements Animatable {
     private String strEmpty="☆";
     private String strFilled="★";
     private int iColorSymbol=Color.BLACK;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public  SymbolSliderView (Context context, AttributeSet attrs, int defStyle) {
@@ -176,7 +180,7 @@ public class SymbolSliderView extends View implements Animatable {
                 getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
                 iMaxRating);
         drawCommentOnCanvas("Animated version",6,iPitch,canvas);
-        drawSymbol(canvas,R.drawable.star_fade_out,R.drawable.star_fade_in,
+        drawSymbol(canvas,R.drawable.star_new,R.drawable.star_fade_in,
                 R.drawable.ic_star_border_black_24dp,
                 iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*7,
                 getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
@@ -201,13 +205,18 @@ public class SymbolSliderView extends View implements Animatable {
                            int iStart, int iEnd, int iPitch, int iY,
                             int iRating,int iMaxRating){
         paint.setColor(iColorSymbol);
+
         paint.setTextSize(iPitch-iGapText);
         for(int i=0;i<iMaxRating;i++){
             if(i<iRating){
-                canvas.drawText(strSymbolLeft,iStart+iGapText+i*iPitch,iY,paint);
+                for(int j=0;j<100;j++) {
+                    paint.setAlpha( j);
+                    canvas.drawText(strSymbolLeft, iStart + iGapText + i * iPitch, iY, paint);
+                }
             }else{
                 canvas.drawText(strSymbolRight,iStart+i*iPitch,iY,paint);
             }
+
         }
     }
 //Simple Image slider
@@ -289,8 +298,8 @@ public class SymbolSliderView extends View implements Animatable {
 
             }
 
-            canvas.save();
-            canvas.translate(getPaddingLeft(), getPaddingTop());
+  //          canvas.save();
+  //          canvas.translate(getPaddingLeft(), getPaddingTop());
             drawable.setBounds(iStart+i*iPitch,iY-iPitch,iStart+i*iPitch+iPitch,iY);
 
             long time = getDrawingTime();
@@ -302,17 +311,17 @@ public class SymbolSliderView extends View implements Animatable {
             drawable.setLevel(level);
             drawable.draw(canvas);
 
-            canvas.restore();
+ //5           canvas.restore();
 
             ViewCompat.postInvalidateOnAnimation(this);
             drawable.draw(canvas);
             iRateBefore=iRating;
             invalidate();
+
         }
     }
 
 
-    
     public int getRatingByMouseLocation(int iLocation, int iLeftLimit, int iRightLimit) {
         int iResult = iMaxRating*iLocation/(iRightLimit-iLeftLimit);
         return iResult;
