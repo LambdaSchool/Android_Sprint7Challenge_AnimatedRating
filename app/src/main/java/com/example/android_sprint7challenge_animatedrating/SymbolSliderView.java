@@ -180,14 +180,14 @@ public class SymbolSliderView extends View implements Animatable {
                 getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
                 iMaxRating);
         drawCommentOnCanvas("Animated version",6,iPitch,canvas);
-        drawSymbol(canvas,R.drawable.star_new,R.drawable.star_fade_in,
-                R.drawable.ic_star_border_black_24dp,
+        drawSymbol(canvas,R.drawable.star_black,R.drawable.star_fade_in,
+                R.drawable.star_white,
                 iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*7,
                 getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
                 iMaxRating);
         drawCommentOnCanvas("Animated version by inputing number",8,iPitch,canvas);
-        drawSymbol(canvas,R.drawable.star_new,R.drawable.star_fade_out,
-                R.drawable.ic_star_border_black_24dp,
+        drawSymbol(canvas,R.drawable.star_black,R.drawable.star_fade_out,
+                R.drawable.star_white,
                 iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*9,
                 iRate,
                 iMaxRating);
