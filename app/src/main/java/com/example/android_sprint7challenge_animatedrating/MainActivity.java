@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements Animatable {
         final SymbolSliderView sl=findViewById(R.id.slider_rate);
         final EditText et=findViewById(R.id.input_rating);
         final DecimalFormat df=new DecimalFormat("##");
+        final               TextView tv=findViewById(R.id.text_result);
         df.setDecimalSeparatorAlwaysShown(true);
 
         Button bt=findViewById(R.id.button_rate);
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements Animatable {
                 }
 
                 sl.setRating(i);
-                TextView tv=findViewById(R.id.text_result);
+
                 tv.setText(sl.getStringRating());
                 tv.invalidate();
 
@@ -73,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements Animatable {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_UP){
-                    EditText eta=findViewById(R.id.input_max);
+                    tv.setText(Integer.toString(event.getAction()));
+     /*               EditText eta=findViewById(R.id.input_max);
                     EditText etb=findViewById(R.id.input_starting);
                     EditText etc=findViewById(R.id.input_filled);
                     EditText etd=findViewById(R.id.input_empty);
@@ -82,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements Animatable {
                     sl.setMaxRating(i);
                     sl.setStartingRating(Integer.parseInt(etb.getText().toString()));
                     sl.setStrEmpty(etd.getText().toString());
-                    sl.setStrFilled(etc.getText().toString());
+                    sl.setStrFilled(etc.getText().toString());*/
+                   tv.invalidate();
                 }
 
                 return false;
