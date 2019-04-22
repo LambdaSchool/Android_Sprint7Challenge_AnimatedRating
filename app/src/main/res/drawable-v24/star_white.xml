@@ -35,7 +35,7 @@
                 android:propertyName="fillColor"
                 android:duration="1000"
                 android:valueFrom="#ffffff"
-                android:valueTo="#FF000000"
+                android:valueTo="#FFF00000"
                 android:valueType="colorType"
                 android:interpolator="@android:interpolator/fast_out_slow_in"/>
         </aapt:attr>
