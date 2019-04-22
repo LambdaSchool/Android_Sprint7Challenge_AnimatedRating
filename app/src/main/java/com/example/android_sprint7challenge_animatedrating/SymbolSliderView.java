@@ -59,8 +59,8 @@ public class SymbolSliderView extends View implements Animatable {
     private String strFilled = "★";
     private int iColorSymbol = Color.BLACK;
     private static Drawable drawable;
-    private AnimatedVectorDrawable animationDrawable;
-
+    private static AnimatedVectorDrawable animationDrawable;
+    private static Drawable drawableAnime;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public SymbolSliderView(Context context, AttributeSet attrs, int defStyle) {
@@ -193,7 +193,7 @@ public class SymbolSliderView extends View implements Animatable {
                         iMaxRating);
             }else{
                 drawSymbol(canvas, R.drawable.ic_star_black_24dp, R.drawable.ic_star_half_black_24dp,
-                        R.drawable.star_lefttoright, R.drawable.ic_star_half_black_24dp,
+                        R.drawable.star_lefttoright, R.drawable.ic_star_border_black_24dp,
                         iStartingPointX, iEnd, iPitch, iStartingPointY + iPitch,
                         getRatingByMouseLocation((int) fX, iStartingPointX, iEnd),
                         iMaxRating);
@@ -286,14 +286,10 @@ public class SymbolSliderView extends View implements Animatable {
 
             } else if (i == iRating - 1) {
                 if (iRating > iRateBefore) {
-                    Drawable drawableAnime;
                     drawableAnime = ContextCompat.getDrawable(getContext(), iSymbolLeftToRight);
                     drawableAnime.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
                     animateStart(canvas, drawableAnime);
-
-                    invalidate();
                 } else {
-
                         drawable = ContextCompat.getDrawable(getContext(), iSymbolLeft);
                         drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
                         drawable.draw(canvas);
@@ -301,30 +297,21 @@ public class SymbolSliderView extends View implements Animatable {
             } else if (i == iRating) {
 
                 if (iRating < iRateBefore) {
-                    Drawable drawableAnime;
+
                     drawableAnime = ContextCompat.getDrawable(getContext(), iSymbolRightToLeft);
                     drawableAnime.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
-                    paint.setColor(Color.RED);
                     animateStart(canvas,drawableAnime);
-                    drawable = ContextCompat.getDrawable(getContext(), iSymbolRight);
-                    drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
-                    drawable.draw(canvas);
-
                 } else {
                         drawable = ContextCompat.getDrawable(getContext(), iSymbolRight);
                         drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
                         drawable.draw(canvas);
                 }
-
             } else {
-
                 drawable = ContextCompat.getDrawable(getContext(), iSymbolRight);
                 drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
                 drawable.draw(canvas);
             }
-
         }
-
     }
 
 
@@ -343,25 +330,12 @@ public class SymbolSliderView extends View implements Animatable {
                     animationDrawable.stop();
                 } else {
                     animationDrawable.start();
-
-                }
-                try{
-                    animationDrawable.wait(2000);
-                }catch (Exception e){
-                    e.getLocalizedMessage();
-                }
-
+               }
 
             }else{
                 drawable.draw(canvas);
             }
         }
-
-
-
-
-
-
     }
 
 
