@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,20 +69,23 @@ public class MainActivity extends AppCompatActivity implements Animatable {
 
             }
         });
-        findViewById(R.id.slider_rate).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.slider_rate).setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                EditText eta=findViewById(R.id.input_max);
-                EditText etb=findViewById(R.id.input_starting);
-                EditText etc=findViewById(R.id.input_filled);
-                EditText etd=findViewById(R.id.input_empty);
-                String str=eta.getText().toString();
-                int i=Integer.parseInt(str);
-                sl.setMaxRating(i);
-                sl.setStartingRating(Integer.parseInt(etb.getText().toString()));
-                sl.setStrEmpty(etd.getText().toString());
-                sl.setStrFilled(etc.getText().toString());
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    EditText eta=findViewById(R.id.input_max);
+                    EditText etb=findViewById(R.id.input_starting);
+                    EditText etc=findViewById(R.id.input_filled);
+                    EditText etd=findViewById(R.id.input_empty);
+                    String str=eta.getText().toString();
+                    int i=Integer.parseInt(str);
+                    sl.setMaxRating(i);
+                    sl.setStartingRating(Integer.parseInt(etb.getText().toString()));
+                    sl.setStrEmpty(etd.getText().toString());
+                    sl.setStrFilled(etc.getText().toString());
+                }
 
+                return false;
             }
         });
 
