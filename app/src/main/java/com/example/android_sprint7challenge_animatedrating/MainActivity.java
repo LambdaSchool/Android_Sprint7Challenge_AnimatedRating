@@ -68,6 +68,22 @@ public class MainActivity extends AppCompatActivity implements Animatable {
 
             }
         });
+        findViewById(R.id.slider_rate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText eta=findViewById(R.id.input_max);
+                EditText etb=findViewById(R.id.input_starting);
+                EditText etc=findViewById(R.id.input_filled);
+                EditText etd=findViewById(R.id.input_empty);
+                String str=eta.getText().toString();
+                int i=Integer.parseInt(str);
+                sl.setMaxRating(i);
+                sl.setStartingRating(Integer.parseInt(etb.getText().toString()));
+                sl.setStrEmpty(etd.getText().toString());
+                sl.setStrFilled(etc.getText().toString());
+
+            }
+        });
 
 
 
