@@ -32,6 +32,7 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLSurface;
 
 import static android.content.ContentValues.TAG;
+import static java.lang.Math.log;
 
 /**
  * Draw symbol。
@@ -42,36 +43,38 @@ public class SymbolSliderView extends View implements Animatable {
     private Paint paint;
     private float fX;    // 図形を描画する X 座標    // (1)
     private float fY;    // 図形を描画する Y 座標    // (2)
-    private int iWidthCanvas ;
+    private int iWidthCanvas;
     private int iHeightCanvas;
-    private int iStartingRating=0;
-    private int iRate=iStartingRating;
+    private int iStartingRating = 0;
+    private int iRate = iStartingRating;
     private int iRateBefore;
-    private int iSizeText=100;
-    private int iMaxRating=10;
-    private int iStartingPointX=50;
-    private int iStartingPointY=200;
+    private int iSizeText = 100;
+    private int iMaxRating = 10;
+    private int iStartingPointX = 50;
+    private int iStartingPointY = 200;
     private int iEndPointX;
     private int iEndPointY;
-    private int iGapText=10;
-    private String strEmpty="☆";
-    private String strFilled="★";
-    private int iColorSymbol=Color.BLACK;
+    private int iGapText = 10;
+    private String strEmpty = "☆";
+    private String strFilled = "★";
+    private int iColorSymbol = Color.BLACK;
+    private static Drawable drawable;
+    private AnimatedVectorDrawable animationDrawable;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public  SymbolSliderView (Context context, AttributeSet attrs, int defStyle) {
+    public SymbolSliderView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initialize(attrs);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public  SymbolSliderView (Context context, AttributeSet attrs) {
+    public SymbolSliderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize(attrs);
     }
 
-    public  SymbolSliderView (Context context) {
+    public SymbolSliderView(Context context) {
         super(context);
         initialize();
     }
@@ -91,32 +94,33 @@ public class SymbolSliderView extends View implements Animatable {
         paint.setStyle(Style.FILL);    // (5)
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceType")
     private void initialize(AttributeSet attrs) {
-        Context context=getContext();
+        Context context = getContext();
         // 画面のサイズを取得する
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();
         iWidthCanvas = display.getWidth();
         iHeightCanvas = display.getHeight();
 
-        if(attrs!=null){
-            TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.SymbolSliderlView);
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SymbolSliderlView);
 
-            iStartingRating=typedArray.getInteger(R.styleable.SymbolSliderlView_iStartingRating,0);
-            iSizeText=typedArray.getInteger(R.styleable.SymbolSliderlView_iSizeText,100);
-            iMaxRating=typedArray.getInteger(R.styleable.SymbolSliderlView_iMaxRating,10);
-            iGapText=typedArray.getInteger(R.styleable.SymbolSliderlView_iGapText,10);
+            iStartingRating = typedArray.getInteger(R.styleable.SymbolSliderlView_iStartingRating, 0);
+            iSizeText = typedArray.getInteger(R.styleable.SymbolSliderlView_iSizeText, 100);
+            iMaxRating = typedArray.getInteger(R.styleable.SymbolSliderlView_iMaxRating, 10);
+            iGapText = typedArray.getInteger(R.styleable.SymbolSliderlView_iGapText, 10);
 //            strEmpty=typedArray.getString(R.styleable.SliderlView_strFilled,"☆");
-         //   strFilled=typedArray.getString(R.styleable.SliderlView_strFilled,"★");
+            //   strFilled=typedArray.getString(R.styleable.SliderlView_strFilled,"★");
             // ペイントオブジェクトを設定する
             paint = new Paint();
             paint.setAntiAlias(true);
             paint.setColor(Color.RED);    // (4)
             paint.setStyle(Style.FILL);    // (5)
             typedArray.recycle();
-        }else{
+        } else {
             // ペイントオブジェクトを設定する
             paint = new Paint();
             paint.setAntiAlias(true);
@@ -126,34 +130,37 @@ public class SymbolSliderView extends View implements Animatable {
     }
 
 
-    public void setRating(int iRating){
-        iRate=iRating;
+    public void setRating(int iRating) {
+        iRate = iRating;
         invalidate();
     }
-    public int getRating(){
+
+    public int getRating() {
         return iRate;
 
     }
-    public String getStringRating(){
+
+    public String getStringRating() {
         return Integer.toString(iRate);
 
     }
 
-    public void setMaxRating(int iMaxRating){
-        this.iMaxRating=iMaxRating;
+    public void setMaxRating(int iMaxRating) {
+        this.iMaxRating = iMaxRating;
     }
 
-    public void setStartingRating(int iRate){
-        this.iStartingRating=iRate;
+    public void setStartingRating(int iRate) {
+        this.iStartingRating = iRate;
     }
 
-    public void setStrFilled(String strFilled){
-        this.strFilled=strFilled;
+    public void setStrFilled(String strFilled) {
+        this.strFilled = strFilled;
     }
 
-    public void setStrEmpty(String strEmpty){
-        this.strEmpty=strEmpty;
+    public void setStrEmpty(String strEmpty) {
+        this.strEmpty = strEmpty;
     }
+
     @TargetApi(Build.VERSION_CODES.P)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -162,167 +169,199 @@ public class SymbolSliderView extends View implements Animatable {
         drawGrid(canvas, 50);
 
 
-        int  iEnd=iWidthCanvas-50,iPitch=(iEnd-iStartingPointX)/iMaxRating;
-  //      paint.setTextSize(iSizeText);
+        int iEnd = iWidthCanvas - 50, iPitch = (iEnd - iStartingPointX) / iMaxRating;
+
         paint.setTextSize(iPitch);
-        drawCommentOnCanvas("Text input rating will be shown",0,iPitch,canvas);
+        //       drawCommentOnCanvas("Text input rating will be shown",0,iPitch,canvas);
 
-        drawSymbol(canvas,strFilled,strEmpty,iStartingPointX,iEnd,iPitch,
-                iStartingPointY+iPitch, iRate,iMaxRating);
-        drawCommentOnCanvas("Character symbol version ",2,iPitch,canvas);
+        //       drawSymbol(canvas,strFilled,strEmpty,iStartingPointX,iEnd,iPitch,
+        //               iStartingPointY+iPitch, iRate,iMaxRating);
+        //       drawCommentOnCanvas("Character symbol version ",2,iPitch,canvas);
 
-        drawSymbol(canvas,strFilled,strEmpty,iStartingPointX,iEnd,iPitch,
-                iStartingPointY+iPitch*3,getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
-                iMaxRating);
-        drawCommentOnCanvas("Simple pictures version",4,iPitch,canvas);
-        drawSymbol(canvas,R.drawable.ic_star_black_24dp,R.drawable.ic_star_border_black_24dp,
-                iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*5,
-                getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
-                iMaxRating);
-        drawCommentOnCanvas("Animated version",6,iPitch,canvas);
-        drawSymbol(canvas,R.drawable.star_black,R.drawable.star_fade_in,
-                R.drawable.star_white,
-                iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*7,
-                getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
-                iMaxRating);
-        drawCommentOnCanvas("Animated version by inputing number",8,iPitch,canvas);
-        drawSymbol(canvas,R.drawable.star_black,R.drawable.star_fade_out,
-                R.drawable.star_white,
-                iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*9,
-                iRate,
-                iMaxRating);
-        drawCommentOnCanvas("Rating="+Integer.toString(getRatingByMouseLocation((int)fX,iStartingPointX,iEnd)),10,iPitch,canvas);
+        //      drawSymbol(canvas,strFilled,strEmpty,iStartingPointX,iEnd,iPitch,
+        //               iStartingPointY+iPitch*3,getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
+//                iMaxRating);
+        //       drawCommentOnCanvas("Simple pictures version",1,iPitch,canvas);
+   /*     */
+        drawCommentOnCanvas("Animated version", 0, iPitch, canvas);
+        try{
+            int iCurrentRating=getRatingByMouseLocation((int) fX, iStartingPointX, iEnd);
+            if(iCurrentRating==iRateBefore){
+                drawSymbol(canvas,R.drawable.ic_star_black_24dp,R.drawable.ic_star_border_black_24dp,
+                        iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch,
+                        getRatingByMouseLocation((int)fX,iStartingPointX,iEnd),
+                        iMaxRating);
+            }else{
+                drawSymbol(canvas, R.drawable.ic_star_black_24dp, R.drawable.ic_star_half_black_24dp,
+                        R.drawable.star_lefttoright, R.drawable.ic_star_half_black_24dp,
+                        iStartingPointX, iEnd, iPitch, iStartingPointY + iPitch,
+                        getRatingByMouseLocation((int) fX, iStartingPointX, iEnd),
+                        iMaxRating);
+                iRateBefore=iCurrentRating;
+            }
+
+
+        }catch (Exception e){
+        }
+
+
+
+
+
+
+
+        drawCommentOnCanvas("Animated version by inputing number", 2, iPitch, canvas);
+
+  /*      drawSymbol(canvas, R.drawable.ic_star_black_24dp,R.drawable.heartfill,
+                R.drawable.heart, R.drawable.ic_star_border_black_24dp,
+                    iStartingPointX,iEnd,iPitch,iStartingPointY+iPitch*3,
+                    iRate,
+                    iMaxRating);
+            iRateBefore=iRate;*/
+        drawCommentOnCanvas("Rating=" + Integer.toString(getRatingByMouseLocation((int) fX, iStartingPointX, iEnd)), 4, iPitch, canvas);
+
     }
-  //Debug purpose
-    void drawCommentOnCanvas(String strComment,int iRow,int iPitch,Canvas canvas){
+
+    //Debug purpose
+    void drawCommentOnCanvas(String strComment, int iRow, int iPitch, Canvas canvas) {
         paint.setTextSize(50);
         paint.setColor(Color.BLACK);
         canvas.drawText(strComment,
-                iStartingPointX,iStartingPointY+iPitch*iRow,paint);
+                iStartingPointX, iStartingPointY + iPitch * iRow, paint);
     }
-//String slider
-    private void drawSymbol(Canvas canvas, String strSymbolLeft,String strSymbolRight,
-                           int iStart, int iEnd, int iPitch, int iY,
-                            int iRating,int iMaxRating){
+
+    //String slider
+    private void drawSymbol(Canvas canvas, String strSymbolLeft, String strSymbolRight,
+                            int iStart, int iEnd, int iPitch, int iY,
+                            int iRating, int iMaxRating) {
         paint.setColor(iColorSymbol);
 
-        paint.setTextSize(iPitch-iGapText);
-        for(int i=0;i<iMaxRating;i++){
-            if(i<iRating){
-                for(int j=0;j<100;j++) {
-                    paint.setAlpha( j);
+        paint.setTextSize(iPitch - iGapText);
+        for (int i = 0; i < iMaxRating; i++) {
+            if (i < iRating) {
+                for (int j = 0; j < 100; j++) {
+                    paint.setAlpha(j);
                     canvas.drawText(strSymbolLeft, iStart + iGapText + i * iPitch, iY, paint);
                 }
-            }else{
-                canvas.drawText(strSymbolRight,iStart+i*iPitch,iY,paint);
+            } else {
+                canvas.drawText(strSymbolRight, iStart + i * iPitch, iY, paint);
             }
 
         }
     }
-//Simple Image slider
+
+    //Simple Image slider
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void drawSymbol(Canvas canvas, int iSymbolLeft, int iSymbolRight,
                            int iStart, int iEnd, int iPitch, int iY,
-                           int iRating, int iMaxRating){
+                           int iRating, int iMaxRating) {
 
-        Drawable drawable;
-        for(int i=0;i<iMaxRating;i++){
-            if(i<iRating){
+        for (int i = 0; i < iMaxRating; i++) {
+            if (i < iRating) {
                 paint.setColor(Color.BLACK);
-                drawable= ContextCompat.getDrawable(getContext(),iSymbolLeft);
-            }else{
-                drawable= ContextCompat.getDrawable(getContext(),iSymbolRight);
+                drawable = ContextCompat.getDrawable(getContext(), iSymbolLeft);
+            } else {
+                drawable = ContextCompat.getDrawable(getContext(), iSymbolRight);
                 paint.setColor(Color.GREEN);
             }
-            drawable.setBounds(iStart+i*iPitch,iY-iPitch,iStart+i*iPitch+iPitch,iY);
-            iRateBefore=iRating;
+            drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
             drawable.draw(canvas);
             invalidate();
         }
     }
+
     //Animated Image slider
     @RequiresApi(api = Build.VERSION_CODES.P)
-    public void drawSymbol(Canvas canvas, int iSymbolLeftToRight,int iSymbolRightToLeft,
+    public void drawSymbol(Canvas canvas, int iSymbolLeft, int iSymbolRightToLeft, int iSymbolLeftToRight,
                            int iSymbolRight,
                            int iStart, int iEnd, int iPitch, int iY,
-                           int iRating, int iMaxRating){
+                           int iRating, int iMaxRating) throws InterruptedException {
 
-        Drawable drawable;
-        for(int i=0;i<iMaxRating;i++){
-            if(i<iRating){
-                paint.setColor(Color.BLACK);
+        for (int i = 0; i < iMaxRating; i++) {
+            paint.setColor(Color.BLACK);
+            if (i < iRating - 1) {//left
+                drawable = ContextCompat.getDrawable(getContext(), iSymbolLeft);
+                drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
+                drawable.draw(canvas);
 
-                    drawable= ContextCompat.getDrawable(getContext(),iSymbolLeftToRight);
+            } else if (i == iRating - 1) {
+                if (iRating > iRateBefore) {
+                    Drawable drawableAnime;
+                    drawableAnime = ContextCompat.getDrawable(getContext(), iSymbolLeftToRight);
+                    drawableAnime.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
+                    animateStart(canvas, drawableAnime);
+
+                    invalidate();
+                } else {
+
+                        drawable = ContextCompat.getDrawable(getContext(), iSymbolLeft);
+                        drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
+                        drawable.draw(canvas);
+                }
+            } else if (i == iRating) {
+
+                if (iRating < iRateBefore) {
+                    Drawable drawableAnime;
+                    drawableAnime = ContextCompat.getDrawable(getContext(), iSymbolRightToLeft);
+                    drawableAnime.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
+                    paint.setColor(Color.RED);
+                    animateStart(canvas,drawableAnime);
+                    drawable = ContextCompat.getDrawable(getContext(), iSymbolRight);
+                    drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
+                    drawable.draw(canvas);
+
+                } else {
+                        drawable = ContextCompat.getDrawable(getContext(), iSymbolRight);
+                        drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
+                        drawable.draw(canvas);
+                }
+
+            } else {
+
+                drawable = ContextCompat.getDrawable(getContext(), iSymbolRight);
+                drawable.setBounds(iStart + i * iPitch, iY - iPitch, iStart + i * iPitch + iPitch, iY);
+                drawable.draw(canvas);
+            }
+
+        }
+
+    }
+
+
+    private void animateStart(Canvas canvas, Drawable drawable) {
+
+        int level = 2000;
+        drawable.setLevel(level);
+
+        if (Build.VERSION.SDK_INT > 27) {
+
+            if (drawable instanceof AnimatedVectorDrawable) {
+                animationDrawable = (AnimatedVectorDrawable) drawable;
+                animationDrawable.draw(canvas);
+                ViewCompat.postInvalidateOnAnimation(this);
+                if (animationDrawable.isRunning()) {
+                    animationDrawable.stop();
+                } else {
+                    animationDrawable.start();
+
+                }
+                try{
+                    animationDrawable.wait(2000);
+                }catch (Exception e){
+                    e.getLocalizedMessage();
+                }
 
 
             }else{
-
-                if(iRateBefore<iRating) {
-                    drawable = ContextCompat.getDrawable(getContext(), iSymbolRightToLeft);
-                }else{
-                    drawable= ContextCompat.getDrawable(getContext(),iSymbolRight);
-                }
-
-
-                paint.setColor(Color.GREEN);
+                drawable.draw(canvas);
             }
-            if(Build.VERSION.SDK_INT>27){
-                if (drawable instanceof AnimatedImageDrawable) {
-
-                    final AnimatedImageDrawable animatedImageDrawable = (AnimatedImageDrawable) drawable;
-
-                    if (animatedImageDrawable.isRunning()) {
-                        animatedImageDrawable.stop();
-                    } else {
-                        animatedImageDrawable.start();
-                    }
-
-                } else if (drawable instanceof AnimationDrawable) {
-
-                    final AnimationDrawable animationDrawable = (AnimationDrawable) drawable;
-
-                    if (animationDrawable.isRunning()) {
-                        animationDrawable.stop();
-                    } else {
-                        animationDrawable.start();
-                    }
-
-                } if(drawable instanceof AnimatedVectorDrawable){
-                    final AnimatedVectorDrawable animationDrawable = (AnimatedVectorDrawable) drawable;
-
-                    if (animationDrawable.isRunning()) {
-                        animationDrawable.stop();
-                    } else {
-                        animationDrawable.start();
-                    }
-
-
-
-                }
-
-            }
-
-  //          canvas.save();
-  //          canvas.translate(getPaddingLeft(), getPaddingTop());
-            drawable.setBounds(iStart+i*iPitch,iY-iPitch,iStart+i*iPitch+iPitch,iY);
-
-            long time = getDrawingTime();
-            float ANIM_PERIOD=100;
-            int MAX_LEVEL=100;
-            // I'm not sure about the +1.
-            float prog = (float)(time % ANIM_PERIOD+1) / (float)ANIM_PERIOD;
-            int level = (int)(MAX_LEVEL * prog);
-            drawable.setLevel(level);
-            drawable.draw(canvas);
-
- //5           canvas.restore();
-
-            ViewCompat.postInvalidateOnAnimation(this);
-      //      drawable.draw(canvas);
-            iRateBefore=iRating;
-            invalidate();
-
         }
+
+
+
+
+
+
     }
 
 

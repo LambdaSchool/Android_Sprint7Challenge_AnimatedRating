@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.opengl.EGLDisplay;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+
+import static android.opengl.EGL14.EGL_DEFAULT_DISPLAY;
+import static android.opengl.EGL14.eglGetDisplay;
+import static android.opengl.EGL14.eglInitialize;
+import static android.opengl.EGL14.eglMakeCurrent;
 
 public class MainActivity extends AppCompatActivity implements Animatable {
     Context context;
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements Animatable {
             public void onClick(View v) {
                 int i=1;
                 try{
-                    i=Integer.parseInt( et.getText().toString());
+                    i=Integer.parseInt(et.getText().toString());
                 }catch(Exception e){
                     i=1;
                 }
@@ -68,27 +74,6 @@ public class MainActivity extends AppCompatActivity implements Animatable {
                 sl.setStrEmpty(etd.getText().toString());
                 sl.setStrFilled(etc.getText().toString());
 
-            }
-        });
-        findViewById(R.id.slider_rate).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP){
-                    tv.setText(Integer.toString(event.getAction()));
-     /*               EditText eta=findViewById(R.id.input_max);
-                    EditText etb=findViewById(R.id.input_starting);
-                    EditText etc=findViewById(R.id.input_filled);
-                    EditText etd=findViewById(R.id.input_empty);
-                    String str=eta.getText().toString();
-                    int i=Integer.parseInt(str);
-                    sl.setMaxRating(i);
-                    sl.setStartingRating(Integer.parseInt(etb.getText().toString()));
-                    sl.setStrEmpty(etd.getText().toString());
-                    sl.setStrFilled(etc.getText().toString());*/
-                   tv.invalidate();
-                }
-
-                return false;
             }
         });
 
