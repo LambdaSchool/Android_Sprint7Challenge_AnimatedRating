@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,9 +9,6 @@
     <!-- TODO: Update blank fragment layout -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
- xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -32,7 +30,7 @@
                 android:orientation="vertical"
                 android:layout_height="match_parent">
                 <TextView
-                    android:id="@+id/sample_text"
+                    android:id="@+id/sample_text1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 
@@ -46,14 +44,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="5"
-            android:stepSize="1"
             android:rating="3"
+            android:stepSize="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.467"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scroll_view"
-            app:layout_constraintVertical_bias="0.119" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tvRatingScale"
@@ -68,16 +66,18 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar"
-            app:layout_constraintVertical_bias="0.265" />
+            app:layout_constraintVertical_bias="0.128" />
 
         <EditText
             android:id="@+id/etFeedBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
             android:hint="TYPE SUBJECT HERE"
+            android:inputType="textMultiLine"
             app:layout_constraintBottom_toTopOf="@+id/tvRatingScale"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+            app:layout_constraintTop_toTopOf="@+id/ratingBar"
+            app:layout_constraintVertical_bias="0.85"
+            tools:layout_editor_absoluteX="0dp" />
 
         <Button
             android:id="@+id/btnSubmit"
@@ -93,16 +93,17 @@
 
         <ImageView
             android:id="@+id/animation_view"
-            android:layout_width="match_parent"
-            android:layout_height="213dp"
+            android:layout_width="229dp"
+            android:layout_height="144dp"
             android:background="#e57373"
             android:src="@mipmap/ic_launcher"
             android:text="Send feedback"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnSubmit"
-            app:layout_constraintVertical_bias="0.465"
-            tools:layout_editor_absoluteX="-7dp" />
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

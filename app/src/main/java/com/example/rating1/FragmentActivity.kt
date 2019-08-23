@@ -2,22 +2,43 @@ package com.example.rating1
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Paint
 import android.graphics.drawable.Animatable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.rating1.lists.RatingList
+import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.animation_view
+import kotlinx.android.synthetic.main.activity_main.btnSubmit
+import kotlinx.android.synthetic.main.activity_main.etFeedBack
+import kotlinx.android.synthetic.main.activity_main.list_layout
+import kotlinx.android.synthetic.main.activity_main.ratingBar
+import kotlinx.android.synthetic.main.activity_main.tvRatingScale
+import kotlinx.android.synthetic.main.fragment_first.*
 
 class FragmentActivity : AppCompatActivity() {
+    companion object {
+
+        val EXTRA_STRING: String? = "My text view"
+
+        val RESULT_INT: Int = 54321
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fragment)
+
+
+
+
 
         btnSubmit.setOnClickListener {
 
@@ -40,6 +61,7 @@ class FragmentActivity : AppCompatActivity() {
             when (ratingBar.rating.toInt()) {
                 1 -> tvRatingScale.setText("Very bad")
 
+
                 2 -> tvRatingScale.setText("Need some improvement")
 
                 3 -> tvRatingScale.setText("Good")
@@ -57,9 +79,14 @@ class FragmentActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View) {
                 if (tvRatingScale.getText().toString().isEmpty()) {
+                    sample_text1.setOnClickListener {
+                        intentGenerator(RatingList((sample_text1.text.toString()) ))
+                        list_layout.removeView(it)
+                    }
                     Toast.makeText(this@FragmentActivity, "Please fill in feedback text box", Toast.LENGTH_LONG).show()
                 } else {
                     tvRatingScale.setText("")
+                    sample_text1.setText(EXTRA_STRING)
                     ratingBar.setRating(0f)
                     Toast.makeText(this@FragmentActivity, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show()
                 }
@@ -77,6 +104,35 @@ class FragmentActivity : AppCompatActivity() {
         (animatedVectorDrawable as Animatable).start()
 
 
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RESULT_INT && resultCode == Activity.RESULT_OK) {
+
+            val name: RatingList = data?.getSerializableExtra(MainActivity.EXTRA_STRING) as RatingList
+            val textView: TextView = textViewGenerator(name)
+            list_layout.addView(textView)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    fun textViewGenerator(name: RatingList): TextView {
+        val textView: TextView = TextView(this)
+        textView.textSize = 30f
+        textView.text = name.name
+
+
+
+        textView.setOnClickListener {
+            intentGenerator(name)
+            list_layout.removeView(it)
+        }
+        return textView
+    }
+
+    private fun intentGenerator(name:  RatingList) {
+        val intent = Intent(this,  FragmentActivity::class.java)
+        intent.putExtra(EXTRA_STRING, name)
+        startActivityForResult(intent, RESULT_INT)
     }
     override fun onBackPressed() {
 
