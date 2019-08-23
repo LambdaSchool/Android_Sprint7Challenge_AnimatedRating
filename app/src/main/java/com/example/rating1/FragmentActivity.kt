@@ -95,11 +95,13 @@ class FragmentActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View) {
                 if (tvRatingScale.getText().toString().isEmpty()) {
-                    textViewGenerator(name = RatingList())
+                    sample_text_detail.setText("No rating Added")
+                    sample_text_detail.textSize = 30f
                     Toast.makeText(this@FragmentActivity, "Please fill in feedback text box", Toast.LENGTH_LONG).show()
                 } else {
                     tvRatingScale.setText("")
-                    textViewGenerator(name = RatingList())
+                    sample_text_detail.setText("Thank you for making your selection")
+                    sample_text_detail.textSize = 26f
                     ratingBar.setRating(0f)
                     Toast.makeText(this@FragmentActivity, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show()
                 }
