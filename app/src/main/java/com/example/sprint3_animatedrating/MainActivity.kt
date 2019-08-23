@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragmentpopup.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         Showfrgm_popup()
         val myRatingBar = findViewById<RatingBar>(R.id.ratingBar2)
+
 
 
 
@@ -67,13 +69,15 @@ class MainActivity : AppCompatActivity() {
                 popup.dismiss()
             }
             popup.setOnDismissListener {
-                Toast.makeText(applicationContext,"Rating Submitted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,"Rating Submitted ", Toast.LENGTH_SHORT).show()
             }
 
             TransitionManager.beginDelayedTransition(main_layout)
             popup.showAtLocation(
                 main_layout, Gravity.CENTER, 0,0
             )
+
+
 
         }
 

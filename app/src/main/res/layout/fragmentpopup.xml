@@ -9,7 +9,11 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:text="rate out of five stars!"
+       android:textStyle="bold"
+       android:textSize="24dp"
        android:textColor="@color/colorAccent"/>
+
+
 
 
     <RatingBar
@@ -22,6 +26,12 @@
         android:numStars="5"
         android:stepSize="0.2"
         android:rating="3.0" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="name rating here...."
+        android:textColorHint="@color/colorAccent"/>
 
        <Button
            android:id="@+id/submit_rating"
