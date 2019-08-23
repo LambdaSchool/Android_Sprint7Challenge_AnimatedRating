@@ -5,34 +5,20 @@ import android.content.Intent
 import android.graphics.drawable.Animatable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.RatingBar
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.rating1.lists.RatingList
+import kotlinx.android.synthetic.main.activity_main.*
 
-
-class MainActivity : AppCompatActivity() {
-    companion object {
-
-        val EXTRA_STRING: String? = "data"
-
-        val RESULT_INT: Int? = 54321
-
-    }
+class FragmentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_fragment)
 
-
-
-    //    AnimateVectorFun()
         btnSubmit.setOnClickListener {
 
             val intent = Intent()
@@ -71,11 +57,11 @@ class MainActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View) {
                 if (tvRatingScale.getText().toString().isEmpty()) {
-                    Toast.makeText(this@MainActivity, "Please fill in feedback text box", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@FragmentActivity, "Please fill in feedback text box", Toast.LENGTH_LONG).show()
                 } else {
                     tvRatingScale.setText("")
                     ratingBar.setRating(0f)
-                    Toast.makeText(this@MainActivity, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@FragmentActivity, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -105,3 +91,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
