@@ -64,4 +64,3 @@ class frgm_popup: Fragment() {
 
 }
 
-}
