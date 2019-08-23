@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_first.*
 class FragmentActivity : AppCompatActivity() {
     companion object {
 
-        val EXTRA_STRING: String? = "My text view"
+        val EXTRA_STRING: String? = "This is my Rating"
 
         val RESULT_INT: Int = 54321
 
@@ -35,6 +35,7 @@ class FragmentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fragment)
+
 
 
 
@@ -75,18 +76,30 @@ class FragmentActivity : AppCompatActivity() {
         animation_view.setOnClickListener {
             AnimateVectorFun(R.drawable.avd_cust, it as ImageView)
         }
+        btnSubmit.setOnClickListener {
+
+            val intent = Intent()
+
+            intent.putExtra(MainActivity.EXTRA_STRING, RatingList(sample_text_detail.text.toString()))
+
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
+
+        }
+
+
+
+
 
         btnSubmit.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View) {
                 if (tvRatingScale.getText().toString().isEmpty()) {
-                    sample_text1.setOnClickListener {
-                        intentGenerator(RatingList((sample_text1.text.toString()) ))
-                        list_layout.removeView(it)
-                    }
+                    textViewGenerator(name = RatingList())
                     Toast.makeText(this@FragmentActivity, "Please fill in feedback text box", Toast.LENGTH_LONG).show()
                 } else {
                     tvRatingScale.setText("")
-                    sample_text1.setText(EXTRA_STRING)
+                    textViewGenerator(name = RatingList())
                     ratingBar.setRating(0f)
                     Toast.makeText(this@FragmentActivity, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show()
                 }
@@ -105,6 +118,29 @@ class FragmentActivity : AppCompatActivity() {
 
 
     }
+
+
+
+
+
+
+
+    override fun onBackPressed() {
+
+        val intent = Intent()
+
+        intent.putExtra(MainActivity.EXTRA_STRING, RatingList(getString(R.string.app_name)))
+
+        setResult(Activity.RESULT_CANCELED, intent)
+
+        finish()
+
+    }
+    private fun intentGenerator(name:  RatingList) {
+        val intent = Intent(this,  DetailActivity::class.java)
+        intent.putExtra(EXTRA_STRING, name)
+        startActivityForResult(intent, RESULT_INT)
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RESULT_INT && resultCode == Activity.RESULT_OK) {
 
@@ -114,7 +150,6 @@ class FragmentActivity : AppCompatActivity() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-
     fun textViewGenerator(name: RatingList): TextView {
         val textView: TextView = TextView(this)
         textView.textSize = 30f
@@ -127,23 +162,6 @@ class FragmentActivity : AppCompatActivity() {
             list_layout.removeView(it)
         }
         return textView
-    }
-
-    private fun intentGenerator(name:  RatingList) {
-        val intent = Intent(this,  FragmentActivity::class.java)
-        intent.putExtra(EXTRA_STRING, name)
-        startActivityForResult(intent, RESULT_INT)
-    }
-    override fun onBackPressed() {
-
-        val intent = Intent()
-
-        intent.putExtra(MainActivity.EXTRA_STRING, RatingList(getString(R.string.app_name)))
-
-        setResult(Activity.RESULT_CANCELED, intent)
-
-        finish()
-
     }
 
 }

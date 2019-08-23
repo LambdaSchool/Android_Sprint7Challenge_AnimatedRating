@@ -15,6 +15,13 @@ import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.example.rating1.lists.RatingList
+import kotlinx.android.synthetic.main.activity_main.animation_view
+import kotlinx.android.synthetic.main.activity_main.btnSubmit
+import kotlinx.android.synthetic.main.activity_main.etFeedBack
+import kotlinx.android.synthetic.main.activity_main.list_layout
+import kotlinx.android.synthetic.main.activity_main.ratingBar
+import kotlinx.android.synthetic.main.activity_main.tvRatingScale
+import kotlinx.android.synthetic.main.fragment_first.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         val EXTRA_STRING: String? = "data"
 
-        val RESULT_INT: Int? = 54321
+        val RESULT_INT: Int = 54321
 
     }
 
@@ -30,9 +37,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val rating :RatingList= intent.getSerializableExtra(MainActivity.EXTRA_STRING) as RatingList
 
 
-    //    AnimateVectorFun()
+        //null exception
+        if (rating.name!=getString(R.string.app_name)) {
+
+            etFeedBack.setText(rating.name)
+
+            ratingBar.numStars = rating.rating
+
+        }
+
+
+
+        btnSubmit.setOnClickListener {
+
+            val intent = Intent()
+
+            intent.putExtra(MainActivity.EXTRA_STRING, RatingList(etFeedBack.text.toString(), rating = 1))
+
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
+
+        }
+
+
+
+
+
+        //    AnimateVectorFun()
         btnSubmit.setOnClickListener {
 
             val intent = Intent()
