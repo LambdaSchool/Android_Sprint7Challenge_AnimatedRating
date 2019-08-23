@@ -6,6 +6,7 @@ import android.transition.Explode
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_rating.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,13 +16,16 @@ class MainActivity : AppCompatActivity() {
 
         btn_add_rating.setOnClickListener {
             val ratingFragment:DialogFragment = RatingFragment()
-            ratingFragment.show(supportFragmentManager, "Rating Fragment")
-            var textView= TextView(this)
-            textView.text="test"
-            layout_ratings.addView(textView)
-
+             ratingFragment.show(supportFragmentManager, "Rating Fragment")
 
         }
+    }
+    fun addView(){
+        var textView= TextView(this)
+        textView.text="${RatingBarView.name} ${RatingBarView.rating}"
+        textView.textSize=20f
+        layout_ratings.addView(textView)
+
     }
 
 }

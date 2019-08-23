@@ -15,16 +15,13 @@ class RatingBarView (context: Context, attrs: AttributeSet?): LinearLayout(conte
 
     constructor(context: Context): this(context, null)
 
-    var rating:Int=1
-    var name:String=""
+companion object {
+    var rating: Int = 1
+    var name: String = ""
+}
 
     init {
-        //val typedArray = context.obtainStyledAttributes(attrs, R.styleable.RatingBarView)
-       // val textWeight = typedArray.getFloat(R.styleable.RatingBarView_layout_weight, 8f)
-      //  val textSize = typedArray.getDimension(R.styleable.RatingBarView_textSize, 12f)
-      //  typedArray.recycle()
 
-       // val textLayoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT, textWeight)
         val ratingBarLayout = LayoutInflater.from(context).inflate(R.layout.rating_bar_layout, this, false) as LinearLayout
 
        orientation =  VERTICAL
@@ -38,7 +35,7 @@ class RatingBarView (context: Context, attrs: AttributeSet?): LinearLayout(conte
             rating_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.empty_star))
             rating_4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.empty_star))
             rating_5.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.empty_star))
-
+            name=editText_name.text.toString()
         }
         rating_2.setOnClickListener {
             rating=2
@@ -48,6 +45,7 @@ class RatingBarView (context: Context, attrs: AttributeSet?): LinearLayout(conte
             rating_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.empty_star))
             rating_4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.empty_star))
             rating_5.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.empty_star))
+            name=editText_name.text.toString()
 
         }
         rating_3.setOnClickListener {
@@ -58,6 +56,7 @@ class RatingBarView (context: Context, attrs: AttributeSet?): LinearLayout(conte
 
             rating_4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.empty_star))
             rating_5.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.empty_star))
+            name=editText_name.text.toString()
 
         }
         rating_4.setOnClickListener {
@@ -68,6 +67,7 @@ class RatingBarView (context: Context, attrs: AttributeSet?): LinearLayout(conte
             animateVectorDrawable(R.drawable.empty_to_full, rating_4)
 
             rating_5.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.empty_star))
+            name=editText_name.text.toString()
 
         }
         rating_5.setOnClickListener {
@@ -77,6 +77,7 @@ class RatingBarView (context: Context, attrs: AttributeSet?): LinearLayout(conte
             animateVectorDrawable(R.drawable.empty_to_full, rating_3)
             animateVectorDrawable(R.drawable.empty_to_full, rating_4)
             animateVectorDrawable(R.drawable.empty_to_full, rating_5)
+            name=editText_name.text.toString()
         }
 
     }
@@ -85,9 +86,5 @@ class RatingBarView (context: Context, attrs: AttributeSet?): LinearLayout(conte
         view.setImageDrawable(animatedVectorDrawable)
         (animatedVectorDrawable as Animatable).start()
     }
-
-
-
-
 
 }
