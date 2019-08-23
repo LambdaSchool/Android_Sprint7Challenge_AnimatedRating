@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
     val manager = supportFragmentManager
@@ -20,6 +21,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Showfrgm_popup()
+        val myRatingBar = findViewById<RatingBar>(R.id.ratingBar2)
+
+
+
     }
 
     fun Showfrgm_popup() {
@@ -71,6 +76,8 @@ class MainActivity : AppCompatActivity() {
             )
 
         }
+
+
 
 
 
