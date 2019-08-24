@@ -3,5 +3,7 @@
     <declare-styleable name="RatingBarView">
         <attr name="textSize" format="dimension"/>
         <attr name="layout_weight" format="float"/>
+        <attr name="maximum_ratings" format="integer"/>
+        <attr name="starting_rating" format="integer"/>
     </declare-styleable>
 </resources>

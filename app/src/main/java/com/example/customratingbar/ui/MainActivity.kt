@@ -1,12 +1,13 @@
-package com.example.customratingbar
+package com.example.customratingbar.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Explode
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.example.customratingbar.R
+import com.example.customratingbar.views.RatingBarView
+import com.example.customratingbar.fragments.RatingFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_rating.*
 
 class MainActivity : AppCompatActivity() {
 
