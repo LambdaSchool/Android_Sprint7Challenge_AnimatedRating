@@ -57,8 +57,6 @@ class RatingFragment : DialogFragment() {
 
     override fun onDetach() {
         super.onDetach()
-       // var textView= TextView(main)
-       // textView.text="itemID"
         (activity as MainActivity).addView()
 
         listener = null
