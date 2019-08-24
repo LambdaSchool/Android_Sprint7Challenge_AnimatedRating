@@ -24,6 +24,10 @@ import kotlinx.android.synthetic.main.activity_main.tvRatingScale
 import kotlinx.android.synthetic.main.fragment_first.*
 
 class FragmentActivity : AppCompatActivity() {
+
+
+
+
     companion object {
 
         val EXTRA_STRING: String? = "This is my Rating"
@@ -31,6 +35,11 @@ class FragmentActivity : AppCompatActivity() {
         val RESULT_INT: Int = 54321
 
     }
+
+
+    /*RatingBar ratingBar;
+    TextView rateMessage;
+    String ratedValue*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
