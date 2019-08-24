@@ -20,7 +20,7 @@ This screen recording previews the look and feel of a completed project that mee
 
 <img src="animatedRatingBar_app_new.gif" width="300">
 
-This is a recording demonstrating the base functionality of the app. Use what we've learned to make it look better.
+This is a recording demonstrating the base functionality of the app. AFTER YOU HAVE COMPLETED ALL THE REQUIREMENTS, Use what we've learned to make it look better.
 
 ## Requirements
 
@@ -47,9 +47,9 @@ The requirements for this project are as follows:
 > you can just add views programmatically to a linear layout for the list BONUS: implement a recycler view
 > This can be either a dialog fragment or a full fragment (BONUS: for full fragment for the edit view and for the list view)
 
+Challenge:
 6. After the rating item is added the the list, the user will be able to select it and alter the rating
 > Pass the data (name and rating) into the dialog fragment using a bundle
 > It is easiest to remove the item from the list by calling `removeView` on the parent and passing in the view object to be removed. ANd then add the view like you did before
 
-Challenge:
 Completing all the requirements correctly and 2 bonus requirements can qualify you for a 3. Bonus requirements do not replace the normal requirements.
