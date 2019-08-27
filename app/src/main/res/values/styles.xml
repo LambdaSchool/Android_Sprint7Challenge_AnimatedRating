@@ -7,24 +7,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="foodRatingBar" parent="Widget.AppCompat.RatingBar">
+    <style name="myRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:starStyle">@drawable/ratingbar_empty</item>
+        <item name="android:src">@drawable/ratingbar_empty</item>
+        <item name="android:onClick">animate</item>
 
-
-        <item name="android:state_selected">@drawable/star_filled1</item>
-        <item name="android:progress">@android:integer/config_longAnimTime</item>
-        <item name="android:secondaryProgress">@android:integer/config_shortAnimTime</item>
-
-
-        <item name="android:numStars">5</item>
-        <item name="android:minHeight">30dp</item>
-        <item name="android:maxHeight">30dp</item>
-        <item name="android:starStyle">@drawable/star_filled1</item>
-        <item name="android:itemBackground">@drawable/star_filled1</item>
-
-
-
-
+        <item name="android:minHeight">50dp</item>
+        <item name="android:maxHeight">50dp</item>
     </style>
+
 
 
 

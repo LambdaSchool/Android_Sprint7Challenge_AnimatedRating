@@ -48,12 +48,6 @@ class FragmentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fragment)
 
 
-        fun animate(){
-            rating_bar_image.setOnClickListener {
-                animate()
-            }
-
-        }
 
 
 
@@ -73,7 +67,7 @@ class FragmentActivity : AppCompatActivity() {
 
 
 
-        ratingBar.setOnRatingBarChangeListener(RatingBar.OnRatingBarChangeListener { ratingBar, v, b ->
+      /*  ratingBar.setOnRatingBarChangeListener(RatingBar.OnRatingBarChangeListener { ratingBar, v, b ->
             tvRatingScale.setText(v.toString())
             when (ratingBar.rating.toInt()) {
                 1 -> tvRatingScale.setText("Very bad")
@@ -88,7 +82,7 @@ class FragmentActivity : AppCompatActivity() {
                 else -> tvRatingScale.setText("")
             }
 
-        })
+        })*/
 
         animation_view.setOnClickListener {
             AnimateVectorFun(R.drawable.star_empty, it as ImageView)
@@ -119,7 +113,7 @@ class FragmentActivity : AppCompatActivity() {
                     tvRatingScale.setText("")
                     sample_text_detail.setText("Thank you for making your selection")
                     sample_text_detail.textSize = 26f
-                    ratingBar.setRating(0f)
+
                     Toast.makeText(this@FragmentActivity, "Thank you for sharing your feedback", Toast.LENGTH_SHORT).show()
                 }
             }
