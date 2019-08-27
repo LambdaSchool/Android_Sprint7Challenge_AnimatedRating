@@ -39,18 +39,16 @@
 
         </ScrollView>
 
-        <RatingBar
+
+        <androidx.appcompat.widget.AppCompatRatingBar
             android:id="@+id/ratingBar"
-            style="@style/customRatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:rating="3"
-            android:stepSize="1"
-            android:backgroundTint="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+android:numStars="5"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.467"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scroll_view"
             app:layout_constraintVertical_bias="0.0" />
@@ -77,8 +75,6 @@
             android:hint="TYPE SUBJECT HERE"
             android:inputType="textMultiLine"
             app:layout_constraintBottom_toTopOf="@+id/tvRatingScale"
-            app:layout_constraintTop_toTopOf="@+id/ratingBar"
-            app:layout_constraintVertical_bias="0.85"
             tools:layout_editor_absoluteX="0dp" />
 
         <Button

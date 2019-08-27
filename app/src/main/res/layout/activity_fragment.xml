@@ -11,21 +11,24 @@
         android:id="@+id/second_fragment"
 
         android:name="com.example.rating1.fragments.SecondFragment"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_width="369dp"
+        android:layout_height="130dp"
         app:layout_constraintBottom_toTopOf="@+id/first_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <fragment
         android:id="@+id/first_fragment"
         android:name="com.example.rating1.fragments.FirstFragment"
-        android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_width="392dp"
+        android:layout_height="566dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="11dp" />
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

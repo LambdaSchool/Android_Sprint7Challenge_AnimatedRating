@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Paint
 import android.graphics.drawable.Animatable
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -22,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.list_layout
 import kotlinx.android.synthetic.main.activity_main.ratingBar
 import kotlinx.android.synthetic.main.activity_main.tvRatingScale
 import kotlinx.android.synthetic.main.fragment_first.*
+import kotlinx.android.synthetic.main.view_custom.*
 
 class FragmentActivity : AppCompatActivity() {
 
@@ -46,7 +48,12 @@ class FragmentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fragment)
 
 
+        fun animate(){
+            rating_bar_image.setOnClickListener {
+                animate()
+            }
 
+        }
 
 
 
@@ -72,6 +79,7 @@ class FragmentActivity : AppCompatActivity() {
                 1 -> tvRatingScale.setText("Very bad")
 
 
+
                 2 -> tvRatingScale.setText("Need some improvement")
 
                 3 -> tvRatingScale.setText("Good")
@@ -83,7 +91,7 @@ class FragmentActivity : AppCompatActivity() {
         })
 
         animation_view.setOnClickListener {
-            AnimateVectorFun(R.drawable.avd_cust, it as ImageView)
+            AnimateVectorFun(R.drawable.star_empty, it as ImageView)
         }
         btnSubmit.setOnClickListener {
 
