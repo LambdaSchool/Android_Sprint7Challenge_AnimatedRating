@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--add attributes to pass values in the xml-->
+    <declare-styleable name="RatingsLayout">
+        <attr name="max_rating" format="integer"/>
+        <attr name="starting_rating" format="integer"/>
+        <attr name="empty_symbol" format="string"/>
+        <attr name="filled_symbol" format="string"/>
+        <attr name="alternate_stars" format="boolean"/>
+    </declare-styleable>
+</resources>

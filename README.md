@@ -1,3 +1,4 @@
+Spencer Stock
 # Android User Interface Sprint Challenge Animated Rating
 
 ### Instructions
