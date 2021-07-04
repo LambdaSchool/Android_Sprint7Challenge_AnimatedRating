@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomRatingView">
+        <attr name="maximum_rating" format="integer"/>
+        <attr name="starting_rating" format="integer"/>
+        <attr name="empty_symbol" format="reference"/>
+        <attr name="fill_symbol" format="reference"/>
+    </declare-styleable>
+</resources>
