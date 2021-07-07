@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Sprint4_Challenge</string>
+    <string name="text_decrease"><![CDATA[Decrease<<<<<<<<<<]]></string>
+    <string name="text_increase"><![CDATA[>>>>>>>>>>Increase]]></string>
+    <string name="edit_text_max">Enter Max Stars</string>
+    <string name="edit_text_initial">Enter Initial Rating</string>
+    <string name="button_change">Change rating</string>
+</resources>
