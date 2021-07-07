@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.rybarstudios.animatedrating.CustomRating
+        android:id="@+id/custom_rating"
+        android:layout_width="254dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="86dp"
+        app:defaultRating="5"
+        app:emptyStar="@drawable/avd_empty_star"
+        app:filledStar="@drawable/avd_filled_star"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxRating="10"
+        />
+
+    <com.rybarstudios.animatedrating.CustomRating
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginEnd="86dp"
+        android:layout_marginBottom="185dp"
+        app:defaultRating="5"
+        app:emptyStar="@drawable/vd_vector_empty_star"
+        app:filledStar="@drawable/vd_vector_filled_star"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxRating="10"
+        >
+
+    </com.rybarstudios.animatedrating.CustomRating>
+
+
+</android.support.constraint.ConstraintLayout>
