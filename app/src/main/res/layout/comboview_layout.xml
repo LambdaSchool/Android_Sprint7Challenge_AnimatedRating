@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:textStyle="bold"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
+
+
+
+
+
+<!-- turn linear layout into text view
+and programatically add image views -->
