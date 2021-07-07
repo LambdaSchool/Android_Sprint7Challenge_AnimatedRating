@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomView" >
+        <attr name="startingStar" format="integer"/>
+        <attr name="emptyStar" format="reference"/>
+        <attr name="maxStar" format="integer"/>
+        <attr name="filledStar" format="reference"/>
+    </declare-styleable>
+</resources>
